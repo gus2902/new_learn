@@ -1,0 +1,38 @@
+# Workflow Status
+# Generated: 2026-01-08
+# Project: Moments: Mind Studio
+# Project Type: Greenfield
+# Selected Track: method
+# Field Type: greenfield
+
+generated: "2026-01-08"
+project: "Moments: Mind Studio"
+project_type: "greenfield"
+selected_track: "method"
+field_type: "greenfield"
+workflow_path: "method-greenfield.yaml"
+workflow_status:
+  - id: create-product-brief
+    name: "Product Brief"
+    status: "docs/plans/moments-mind-studio-product-brief.md"
+    priority: "required"
+  - id: research
+    name: "Research"
+    status: "pending"
+    priority: "recommended"
+  - id: create-ux-design
+    name: "UX Design"
+    status: "pending"
+    priority: "recommended"
+  - id: create-prd
+    name: "PRD"
+    status: "pending"
+    priority: "required"
+  - id: create-architecture
+    name: "Architecture"
+    status: "pending"
+    priority: "required"
+  - id: create-epics-and-stories
+    name: "Epics & Stories"
+    status: "pending"
+    priority: "required"
