@@ -3,12 +3,27 @@
 .AppleDouble
 .LSOverride
 
+# Windows
+Thumbs.db
+desktop.ini
+nul
+$RECYCLE.BIN/
+
 # IDE
 .idea/
 .vscode/
 *.swp
 *.swo
 *~
+
+# AI Tools & Settings
+_bmad/
+.agent/
+.claude/
+.codex/
+.cursor/
+.gemini/
+.opencode/
 
 # Logs
 *.log
@@ -24,4 +39,5 @@ yarn-error.log*
 # Temporary files
 *.tmp
 *.temp
+*.bak
 .cache/
