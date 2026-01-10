@@ -19,7 +19,7 @@ Moments: Mind Studio는 전 세계 유저가 겪는 '지식 파편화'와 '로�
 
 ---
 
-## 👤 페르소나 1: Alex Rivera (Global AI Savvy)
+## 👤 페르소나 1: Sarah Mitchell (Global AI Savvy)
 
 ### 시나리오 1: X(Twitter) 스레드의 지식 자산화
 - **Context:** 새로운 LLM 아키텍처에 대한 15개 스레드 발견 (오전 8시, SF 카페).
@@ -35,7 +35,7 @@ Moments: Mind Studio는 전 세계 유저가 겪는 '지식 파편화'와 '로�
 
 ---
 
-## 👤 페르소나 2: 박민수 (Hyper-Local Champion)
+## 👤 페르소나 2: 이지훈 (Hyper-Local Champion)
 
 ### 시나리오 1: 네이버 블로그의 실무 삽질 기록 박제
 - **Context:** 특정 라이브러리의 오류를 해결한 유일한 기록이 한국인의 네이버 블로그에만 있음. 
@@ -69,8 +69,8 @@ Moments: Mind Studio는 전 세계 유저가 겪는 '지식 파편화'와 '로�
 
 | **페르소나** | **핵심 Context** | **핵심 JTBD** | **글로벌 차별화 보완 포인트** |
 |------------|-----------------|--------------|--------------------------|
-| **Alex** | SNS/뉴스레터 소비 | 지식 파편화 통합 | Zero-Latency 스크레이퍼 |
-| **박민수** | 로컬-글로벌 브리지 | 하이퍼 로컬 플랫폼 박제 | Korean-Specialized Parser |
+| **Sarah** | SNS/뉴스레터 소비 | 지식 파편화 통합 | Zero-Latency 스크레이퍼 |
+| **이지훈** | 로컬-글로벌 브리지 | 하이퍼 로컬 플랫폼 박제 | Korean-Specialized Parser |
 | **Elena** | 다국어 리서치 | 초국가적 인사이트 연결 | Culture-Offset 감성 엔진 |
 | **Marcus** | 기업 전략 수립 | 보안 기반 지식 자산화 | GDPR-Compliant Local LLM |
 
