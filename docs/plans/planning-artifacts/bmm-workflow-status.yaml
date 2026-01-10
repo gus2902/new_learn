@@ -18,7 +18,7 @@ workflow_status:
     priority: "required"
   - id: research
     name: "Research"
-    status: "pending"
+    status: "docs/plans/planning-artifacts/research/market-global-pkm-ai-painpoints-research-2026-01-10.md"
     priority: "recommended"
   - id: create-ux-design
     name: "UX Design"
