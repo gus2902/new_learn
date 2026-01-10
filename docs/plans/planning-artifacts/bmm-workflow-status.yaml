@@ -26,13 +26,13 @@ workflow_status:
     priority: "recommended"
   - id: create-prd
     name: "PRD"
-    status: "pending"
+    status: "docs/plans/planning-artifacts/prd.md"
     priority: "required"
   - id: create-architecture
     name: "Architecture"
-    status: "pending"
+    status: "docs/plans/planning-artifacts/architecture.md"
     priority: "required"
   - id: create-epics-and-stories
     name: "Epics & Stories"
-    status: "pending"
+    status: "docs/plans/planning-artifacts/user-stories.md"
     priority: "required"
