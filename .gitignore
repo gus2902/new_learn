@@ -16,15 +16,6 @@ $RECYCLE.BIN/
 *.swo
 *~
 
-# AI Tools & Settings
-_bmad/
-.agent/
-.claude/
-.codex/
-.cursor/
-.gemini/
-.opencode/
-
 # Logs
 *.log
 npm-debug.log*
