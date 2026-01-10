@@ -32,3 +32,6 @@ yarn-error.log*
 *.temp
 *.bak
 .cache/
+
+# Codex
+codex.cmd
