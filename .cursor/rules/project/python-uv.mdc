@@ -1,0 +1,158 @@
+# Python Environment Rules - uv Package Manager
+
+## Overview
+
+This project uses **uv** for Python virtual environment and package management.
+uv is 10-100x faster than pip and provides modern dependency resolution.
+
+## Required Tool
+
+- **uv**: https://docs.astral.sh/uv/
+- Version: 0.9.x or higher
+
+## Commands Reference
+
+### Virtual Environment
+
+```bash
+# Create virtual environment (in project directory)
+uv venv
+
+# Create with specific Python version
+uv venv --python 3.12
+
+# Activate (macOS/Linux)
+source .venv/bin/activate
+
+# Activate (Windows)
+.venv\Scripts\activate
+```
+
+### Package Management
+
+```bash
+# Install from pyproject.toml
+uv pip install -e "."
+
+# Install with optional dependencies
+uv pip install -e ".[dev]"
+uv pip install -e ".[dev,ai]"
+
+# Install specific package
+uv pip install <package>
+
+# Generate/update lock file
+uv pip compile pyproject.toml -o requirements.lock
+
+# Install from lock file (reproducible)
+uv pip sync requirements.lock
+
+# Upgrade all packages
+uv pip install --upgrade -e ".[dev]"
+```
+
+### Project Initialization
+
+```bash
+# Full setup for new Python project
+cd apps/backend
+uv venv --python 3.12
+source .venv/bin/activate
+uv pip install -e ".[dev]"
+```
+
+## Project Structure
+
+```
+apps/backend/
+├── .venv/                 # Virtual environment (gitignored)
+├── pyproject.toml         # Project metadata and dependencies
+├── requirements.lock      # Locked dependencies (commit this)
+├── app/                   # Application code
+└── tests/                 # Test files
+```
+
+## pyproject.toml Format
+
+```toml
+[project]
+name = "project-name"
+version = "0.0.1"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.34.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "ruff>=0.9.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+    "ruff>=0.9.0",
+]
+```
+
+## Rules
+
+1. **ALWAYS use uv** for Python package operations, never pip directly
+2. **Create .venv in project directory** (apps/backend/.venv)
+3. **Commit requirements.lock** for reproducible builds
+4. **Use pyproject.toml** as the single source of truth for dependencies
+5. **Specify Python version** explicitly when creating venv
+
+## Common Workflows
+
+### Adding a new dependency
+
+```bash
+# 1. Add to pyproject.toml dependencies array
+# 2. Run:
+uv pip install -e "."
+# 3. Update lock file:
+uv pip compile pyproject.toml -o requirements.lock
+```
+
+### CI/CD Installation
+
+```bash
+uv venv
+source .venv/bin/activate
+uv pip sync requirements.lock
+```
+
+### Running the application
+
+```bash
+cd apps/backend
+source .venv/bin/activate
+uvicorn app.main:app --reload --port 8000
+```
+
+## Troubleshooting
+
+### "Import could not be resolved" in IDE
+
+1. Ensure venv is activated: `source .venv/bin/activate`
+2. Verify packages installed: `uv pip list`
+3. Set Python interpreter in IDE to `.venv/bin/python`
+
+### Dependency conflicts
+
+```bash
+# Clear and reinstall
+rm -rf .venv
+uv venv --python 3.12
+uv pip install -e ".[dev]"
+```
