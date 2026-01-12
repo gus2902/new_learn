@@ -9,17 +9,25 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "build": "expo export",
+    "prebuild": "expo prebuild",
     "lint": "eslint .",
-    "clean": "rm -rf .expo dist .turbo"
+    "clean": "rm -rf .expo dist .turbo ios android"
   },
   "dependencies": {
     "@moments/shared": "workspace:*",
+    "@supabase/supabase-js": "^2.49.0",
     "expo": "~54.0.31",
+    "expo-linking": "~7.1.1",
+    "expo-secure-store": "~15.0.1",
     "expo-status-bar": "~3.0.9",
     "react": "19.1.0",
-    "react-native": "0.81.5"
+    "react-native": "0.81.5",
+    "react-native-toast-message": "^2.2.1",
+    "react-native-url-polyfill": "^2.0.0",
+    "@react-native-async-storage/async-storage": "2.1.2"
   },
   "devDependencies": {
+    "@expo/config-plugins": "~10.0.2",
     "@types/react": "~19.1.0",
     "typescript": "~5.9.2"
   }

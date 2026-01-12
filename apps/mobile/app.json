@@ -1,30 +1,47 @@
 {
   "expo": {
-    "name": "mobile",
-    "slug": "mobile",
-    "version": "1.0.0",
+    "name": "Moments",
+    "slug": "moments-mind-studio",
+    "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
     "newArchEnabled": true,
+    "scheme": "moments",
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#0a0a0f"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.moments.mindstudio",
+      "buildNumber": "1",
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Allow Moments to save captured images",
+        "UIBackgroundModes": ["fetch", "remote-notification"]
+      }
     },
     "android": {
+      "package": "com.moments.mindstudio",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#0a0a0f"
       },
-      "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "edgeToEdgeEnabled": true
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "./plugins/withShareExtension"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": ""
+      }
     }
   }
 }
