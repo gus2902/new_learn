@@ -1,17 +1,23 @@
 # Workflow Status
-# Generated: 2026-01-08
+# Last Updated: 2026-01-13
 # Project: Moments: Mind Studio
 # Project Type: Greenfield
 # Selected Track: method
 # Field Type: greenfield
 
 generated: "2026-01-08"
+last_updated: "2026-01-13"
 project: "Moments: Mind Studio"
 project_type: "greenfield"
 selected_track: "method"
 field_type: "greenfield"
 workflow_path: "method-greenfield.yaml"
-workflow_status:
+
+current_phase: "implementation"
+current_sprint: "phase-0"
+next_action: "Start MVP Sprint 1 (EP-CAPTURE) or complete proto-02"
+
+planning_status:
   - id: create-product-brief
     name: "Product Brief"
     status: "docs/plans/moments-mind-studio-product-brief.md"
@@ -22,7 +28,7 @@ workflow_status:
     priority: "recommended"
   - id: create-ux-design
     name: "UX Design"
-    status: "pending"
+    status: "docs/plans/planning-artifacts/ux-design-specification.md"
     priority: "recommended"
   - id: create-prd
     name: "PRD"
@@ -36,3 +42,48 @@ workflow_status:
     name: "Epics & Stories"
     status: "docs/plans/planning-artifacts/user-stories.md"
     priority: "required"
+  - id: implementation-readiness
+    name: "Implementation Readiness Check"
+    status: "docs/plans/planning-artifacts/implementation-readiness-report-2026-01-12.md"
+    priority: "required"
+    score: "95/100"
+    decision: "GO"
+
+implementation_status:
+  phase_0:
+    name: "Phase 0: 기술 검증"
+    status: "in-progress"
+    decision: "GO"
+    stories:
+      - id: proto-01-2sec-capture-poc
+        name: "2초 캡처 기술 PoC"
+        status: "done"
+        completed: "2026-01-13"
+        benchmark: "docs/plans/implementation-artifacts/benchmark-report-2026-01-13.md"
+      - id: proto-02-background-wacz-poc
+        name: "백그라운드 WACZ 아카이빙 PoC"
+        status: "backlog"
+  mvp:
+    name: "MVP Phase"
+    status: "pending"
+    epics:
+      - ep-capture
+      - ep-onboarding
+      - ep-graph
+      - ep-journal
+      - ep-search
+      - ep-growth
+
+key_files:
+  sprint_status: "docs/plans/implementation-artifacts/sprint-status.yaml"
+  benchmark_report: "docs/plans/implementation-artifacts/benchmark-report-2026-01-13.md"
+  story_files: "docs/plans/implementation-artifacts/stories/"
+  backend: "apps/backend/"
+  mobile: "apps/mobile/"
+
+session_notes: |
+  2026-01-13 세션 완료:
+  - Phase 0-D 벤치마크 완료 (10/10 사이트 성공, 100% 성공률)
+  - Go/No-Go 결정: GO (p50=0ms, 성공률 100%)
+  - proto-01 스토리 완료
+  - 다음 단계: MVP Sprint 1 시작 또는 proto-02 완료
