@@ -1,0 +1,156 @@
+# Sprint Status - Moments: Mind Studio
+# =====================================
+# This file tracks the development status of all epics and stories.
+# Update this file as work progresses through the development lifecycle.
+
+# generated: 2026-01-13
+# project: Moments: Mind Studio (Digital Darkroom)
+# version: 1.0
+# tracking_system: file-system
+# story_location: "docs/plans/implementation-artifacts/stories/"
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created, ready for development
+#   - in-progress: Developer actively working on implementation
+#   - review: Implementation complete, ready for review
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+#
+# WORKFLOW NOTES:
+# ===============
+# - Mark epic as 'in-progress' when starting work on its first story
+# - SM typically creates next story ONLY after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then Dev runs code-review (fresh context, ideally different LLM)
+# - Phase 0 must be completed with Go decision before MVP development begins
+
+# ============================================================================
+# PHASE 0: 기술 검증 (Go/No-Go Decision Point)
+# ============================================================================
+
+development_status:
+
+  # -------------------------------------------------------------------------
+  # EP-PROTOTYPE: Phase 0 기술 검증 ⚡
+  # Goal: 2초 캡처 기술 실현 가능성 증명
+  # Exit Criteria: 2초 달성 못하면 아키텍처 재설계 또는 프로젝트 재검토
+  # -------------------------------------------------------------------------
+  ep-prototype: in-progress
+  proto-01-2sec-capture-poc: in-progress       # 2초 캡처 기술 PoC [ACTIVE]
+  proto-02-background-wacz-poc: backlog        # 백그라운드 WACZ 아카이빙 PoC
+  ep-prototype-retrospective: optional
+
+# ============================================================================
+# MVP PHASE: 핵심 기능 개발
+# ============================================================================
+
+  # -------------------------------------------------------------------------
+  # EP-CAPTURE: 2초 캡처 및 영구 보존 (WACZ) 📸
+  # Goal: 정보 수집 흐름을 끊지 않는 즉각적인 캡처 + 영구 보존
+  # Stories: 5
+  # -------------------------------------------------------------------------
+  ep-capture: backlog
+  cap-01-onetouch-capture: backlog             # 원터치 웹 클리핑 (2초 캡처)
+  cap-02-offline-local-only: backlog           # 오프라인 우선(Local-only) 저장
+  cap-03-mood-color: backlog                   # 무드 컬러 각인
+  cap-04-browser-extension: backlog            # Browser Extension 캡처 (데스크톱)
+  cap-05-export-backup: backlog                # 데이터 내보내기 (Export/Backup)
+  ep-capture-retrospective: optional
+
+  # -------------------------------------------------------------------------
+  # EP-GRAPH: 시맨틱 그래프 및 자동 연결 🕸️
+  # Goal: 수동 정리 없이 AI가 지식의 맥락을 자동으로 형성
+  # Stories: 2
+  # -------------------------------------------------------------------------
+  ep-graph: backlog
+  graph-01-auto-magic-link: backlog            # 자동 맥락 연결 (Magic Link)
+  graph-02-intersection-discovery: backlog     # 관심사 교집합 발견
+  ep-graph-retrospective: optional
+
+  # -------------------------------------------------------------------------
+  # EP-JOURNAL: 성찰 루틴 및 일기 작성 📓
+  # Goal: 매일 밤 '나'를 되찾는 성찰 시간 제공
+  # Stories: 2 (US-JOURNAL-02 is Phase 1.5)
+  # -------------------------------------------------------------------------
+  ep-journal: backlog
+  journal-01-clip-linked-guide: backlog        # 클립 연동 지능형 일기 가이드 (MVP)
+  journal-02-time-capsule: backlog             # 타임 캡슐 알림 (Phase 1.5)
+  ep-journal-retrospective: optional
+
+  # -------------------------------------------------------------------------
+  # EP-SEARCH: 검색 및 탐색 🔍
+  # Goal: 키워드, 시간, 감정 등 다양한 방식으로 과거 지식 탐색
+  # Stories: 4 (US-SEARCH-01 is Phase 2)
+  # -------------------------------------------------------------------------
+  ep-search: backlog
+  search-02-keyword-search: backlog            # 키워드 검색 (MVP)
+  search-03-timeline-view: backlog             # 타임라인 뷰 (MVP)
+  search-04-mood-filter: backlog               # 무드별 필터 (MVP)
+  search-01-emotional-search: backlog          # 감정 유사도 검색 (Phase 2)
+  ep-search-retrospective: optional
+
+  # -------------------------------------------------------------------------
+  # EP-ONBOARDING: 온보딩 및 초기 설정 🚀
+  # Goal: Zero-friction 온보딩으로 첫 사용 장벽 제거
+  # Stories: 2
+  # -------------------------------------------------------------------------
+  ep-onboarding: backlog
+  onboard-01-zero-friction: backlog            # Zero-friction 온보딩 (MVP)
+  onboard-02-parent-flow: backlog              # 부모용 온보딩 플로우 (MVP)
+  ep-onboarding-retrospective: optional
+
+  # -------------------------------------------------------------------------
+  # EP-GROWTH: 성장 및 리텐션 📈
+  # Goal: 입소문 메커니즘 + 장기 사용 유도
+  # Stories: 3 (US-GROWTH-03 is Phase 1.5)
+  # -------------------------------------------------------------------------
+  ep-growth: backlog
+  growth-01-referral-link: backlog             # Referral 링크 생성 (MVP)
+  growth-02-attribution-survey: backlog        # 가입 설문 (MVP)
+  growth-03-reactivation: backlog              # 휴면 사용자 재참여 (Phase 1.5)
+  ep-growth-retrospective: optional
+
+# ============================================================================
+# PHASE 2+: 고급 기능
+# ============================================================================
+
+  # -------------------------------------------------------------------------
+  # EP-ANALYTICS: 무의식적 패턴 분석 및 시각화 📊
+  # Goal: 장기 사용자에게 성장 궤적 시각화 및 자기 발견 제공
+  # Stories: 2
+  # -------------------------------------------------------------------------
+  ep-analytics: backlog
+  anal-01-growth-timeline: backlog             # 나이테 분석 리포트 (Phase 2+)
+  anal-02-family-mode: backlog                 # 부모용 진로 가이드 (Phase 2+)
+  ep-analytics-retrospective: optional
+
+# ============================================================================
+# SUMMARY
+# ============================================================================
+# Total Epics: 8
+# Total Stories: 22
+#
+# Phase Breakdown:
+#   - Phase 0 (기술 검증): 2 stories (US-PROTO-01, US-PROTO-02)
+#   - MVP: 15 stories
+#   - Phase 1.5: 2 stories (US-JOURNAL-02, US-GROWTH-03)
+#   - Phase 2+: 3 stories (US-SEARCH-01, US-ANAL-01, US-ANAL-02)
+#
+# Priority Order:
+#   1. EP-PROTOTYPE (Phase 0) - MUST complete before MVP
+#   2. EP-CAPTURE → EP-ONBOARDING → EP-GRAPH → EP-JOURNAL → EP-SEARCH → EP-GROWTH
+#   3. EP-ANALYTICS (Phase 2+)
+#
+# Critical Path:
+#   proto-01 → proto-02 → [Go/No-Go] → cap-01 → graph-01 → journal-01
+# ============================================================================
