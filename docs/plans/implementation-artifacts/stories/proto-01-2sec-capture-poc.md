@@ -81,11 +81,11 @@
 
 | Task ID | Task | Est. Hours | Status |
 |---------|------|------------|--------|
-| T-06 | iOS Share Extension 네이티브 모듈 생성 | 4h | pending |
-| T-07 | URL 추출 및 메타데이터 파싱 로직 | 3h | pending |
-| T-08 | Supabase API 호출 (captures 테이블 저장) | 2h | pending |
-| T-09 | "저장됨 ✓" 토스트 알림 UI | 2h | pending |
-| T-10 | 오프라인 캡처 큐잉 (AsyncStorage) | 3h | pending |
+| T-06 | iOS Share Extension 네이티브 모듈 생성 | 4h | ✅ done |
+| T-07 | URL 추출 및 메타데이터 파싱 로직 | 3h | ✅ done |
+| T-08 | Supabase API 호출 (captures 테이블 저장) | 2h | ✅ done |
+| T-09 | "저장됨 ✓" 토스트 알림 UI | 2h | ✅ done |
+| T-10 | 오프라인 캡처 큐잉 (AsyncStorage) | 3h | ✅ done |
 
 ### Phase 0-C: 백엔드 캡처 파이프라인 (Day 6-8)
 
