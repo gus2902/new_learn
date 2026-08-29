@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moments: Design System Visualizer</title>
+    <style>
+        :root {
+            /* Common Spacing */
+            --space-1: 8px;
+            --space-2: 16px;
+            --space-3: 24px;
+            --space-4: 32px;
+            --space-5: 40px;
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 16px;
+        }
+
+        /* Reset & Base */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #f0f0f0;
+            padding: 20px;
+            color: #333;
+        }
+
+        /* Theme 1: Warm Archive (Paper & Wood) */
+        .theme-warm {
+            --bg-primary: #F7F5F0;
+            --bg-secondary: #EBE8E1;
+            --bg-card: #FFFFFF;
+            --text-primary: #2C2420;
+            --text-secondary: #5D5550;
+            --accent: #8C5E45;
+            --accent-soft: #F0E6DE;
+            --border: #DCD6CE;
+            --font-heading: "Merriweather", serif;
+            --font-body: "Inter", sans-serif;
+            --shadow: 0 4px 12px rgba(44, 36, 32, 0.08);
+        }
+
+        /* Theme 2: Modern Gallery (Clean & Minimal) */
+        .theme-modern {
+            --bg-primary: #FAFAFA;
+            --bg-secondary: #F0F0F0;
+            --bg-card: #FFFFFF;
+            --text-primary: #1A1A1A;
+            --text-secondary: #666666;
+            --accent: #2D2D2D;
+            --accent-soft: #EFEFEF;
+            --border: #E5E5E5;
+            --font-heading: "Inter", sans-serif;
+            --font-body: "Inter", sans-serif;
+            --shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Theme 3: Calm Studio (Nature & Soft) */
+        .theme-calm {
+            --bg-primary: #F0F2F0;
+            --bg-secondary: #E1E6E1;
+            --bg-card: #FFFFFF;
+            --text-primary: #1F2E25;
+            --text-secondary: #5A6B60;
+            --accent: #4A6B56;
+            --accent-soft: #DAE6DE;
+            --border: #D1D9D3;
+            --font-heading: "DM Serif Display", serif;
+            --font-body: "Inter", sans-serif;
+            --shadow: 0 4px 16px rgba(31, 46, 37, 0.08);
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .theme-preview {
+            background: var(--bg-primary);
+            padding: 32px;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* Typography */
+        h2 { 
+            font-family: var(--font-heading);
+            color: var(--text-primary);
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        
+        p {
+            font-family: var(--font-body);
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            display: block;
+            opacity: 0.7;
+        }
+
+        /* Components */
+        .card {
+            background: var(--bg-card);
+            padding: 24px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .tag {
+            background: var(--accent-soft);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            font-family: var(--font-body);
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .swatch-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .swatch {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        /* Mobile View Mockup */
+        .mobile-mockup {
+            background: var(--bg-primary);
+            border: 8px solid #333;
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+            height: 400px;
+        }
+
+        .app-header {
+            padding: 24px 20px 12px;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .app-content {
+            padding: 16px;
+        }
+
+        .feed-item {
+            background: var(--bg-card);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #333;
+            font-size: 32px;
+            font-weight: 300;
+        }
+    </style>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <h1 class="section-title">Moments: Design Theme Options</h1>
+
+    <div class="container">
+        
+        <!-- Option 1 -->
+        <div class="theme-preview theme-warm">
+            <div>
+                <span class="label">Option 1</span>
+                <h2>Warm Archive</h2>
+                <p>따뜻한 서재, 종이 질감, 아날로그 감성</p>
+            </div>
+
+            <div class="swatch-group">
+                <div class="swatch" style="background: #F7F5F0"></div>
+                <div class="swatch" style="background: #8C5E45"></div>
+                <div class="swatch" style="background: #2C2420"></div>
+                <div class="swatch" style="background: #DCD6CE"></div>
+            </div>
+
+            <div class="mobile-mockup">
+                <div class="app-header">
+                    <h2>오늘의 서재</h2>
+                    <p>1월 17일, 금요일</p>
+                </div>
+                <div class="app-content">
+                    <div class="feed-item">
+                        <div class="card-header">
+                            <span class="tag">UX 디자인</span>
+                            <span style="font-size:12px; color:var(--text-secondary)">2분 전</span>
+                        </div>
+                        <h3 style="font-family:var(--font-heading); margin-bottom:8px; font-size:16px;">심플함의 미학</h3>
+                        <p style="font-size:13px;">복잡함을 줄이고 본질에 집중하는 디자인...</p>
+                    </div>
+                    <button class="btn">기록하기</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Option 2 -->
+        <div class="theme-preview theme-modern">
+            <div>
+                <span class="label">Option 2</span>
+                <h2>Modern Gallery</h2>
+                <p>깨끗한 여백, 현대 미술관, 명료함</p>
+            </div>
+
+            <div class="swatch-group">
+                <div class="swatch" style="background: #FAFAFA"></div>
+                <div class="swatch" style="background: #2D2D2D"></div>
+                <div class="swatch" style="background: #666666"></div>
+                <div class="swatch" style="background: #E5E5E5"></div>
+            </div>
+
+            <div class="mobile-mockup">
+                <div class="app-header">
+                    <h2>Moments</h2>
+                    <p>Today's Collection</p>
+                </div>
+                <div class="app-content">
+                    <div class="feed-item">
+                        <div class="card-header">
+                            <span class="tag">Design</span>
+                            <span style="font-size:12px; color:var(--text-secondary)">2m ago</span>
+                        </div>
+                        <h3 style="font-family:var(--font-heading); margin-bottom:8px; font-size:16px;">Minimalism</h3>
+                        <p style="font-size:13px;">Reducing complexity to focus on essence...</p>
+                    </div>
+                    <button class="btn">Capture</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Option 3 -->
+        <div class="theme-preview theme-calm">
+            <div>
+                <span class="label">Option 3</span>
+                <h2>Calm Studio</h2>
+                <p>차분한 자연, 딥 그린, 휴식</p>
+            </div>
+
+            <div class="swatch-group">
+                <div class="swatch" style="background: #F0F2F0"></div>
+                <div class="swatch" style="background: #4A6B56"></div>
+                <div class="swatch" style="background: #1F2E25"></div>
+                <div class="swatch" style="background: #DAE6DE"></div>
+            </div>
+
+            <div class="mobile-mockup">
+                <div class="app-header">
+                    <h2>나의 정원</h2>
+                    <p>지식이 자라나는 곳</p>
+                </div>
+                <div class="app-content">
+                    <div class="feed-item">
+                        <div class="card-header">
+                            <span class="tag">인사이트</span>
+                            <span style="font-size:12px; color:var(--text-secondary)">방금 전</span>
+                        </div>
+                        <h3 style="font-family:var(--font-heading); margin-bottom:8px; font-size:16px;">자연스러운 성장</h3>
+                        <p style="font-size:13px;">억지로 하지 않아도 조금씩 쌓여가는...</p>
+                    </div>
+                    <button class="btn">심기</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moments: UI Direction Variations</title>
+    <style>
+        /* Warm Archive Tokens */
+        :root {
+            --bg-primary: #F7F5F0;
+            --bg-secondary: #EBE8E1;
+            --bg-card: #FFFFFF;
+            --text-primary: #2C2420;
+            --text-secondary: #5D5550;
+            --accent: #8C5E45;
+            --border: #DCD6CE;
+            --radius: 12px;
+            --shadow-sm: 0 2px 8px rgba(44, 36, 32, 0.04);
+            --shadow-md: 0 4px 12px rgba(44, 36, 32, 0.08);
+            --font-heading: "Merriweather", serif;
+            --font-body: "Inter", sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #e0e0e0; padding: 20px; font-family: var(--font-body); color: var(--text-primary); }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 40px;
+        }
+
+        h1 { text-align: center; margin-bottom: 40px; color: #333; font-weight: 300; }
+
+        .variant-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .description {
+            font-size: 13px;
+            color: #777;
+            margin-bottom: 8px;
+        }
+
+        /* Mockup Frame */
+        .mockup {
+            width: 100%;
+            height: 640px;
+            background: var(--bg-primary);
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border: 8px solid #333;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Common Components */
+        .status-bar { height: 44px; display: flex; justify-content: space-between; padding: 0 20px; align-items: center; font-size: 12px; font-weight: 600; }
+        .fab { position: absolute; bottom: 24px; right: 24px; width: 56px; height: 56px; background: var(--accent); border-radius: 50%; box-shadow: var(--shadow-md); color: white; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; z-index: 10; }
+        
+        /* 1. Classic Library */
+        .layout-classic .header { padding: 20px; background: var(--bg-primary); border-bottom: 1px solid var(--border); }
+        .layout-classic h2 { font-family: var(--font-heading); font-size: 24px; }
+        .layout-classic .grid { padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; overflow-y: auto; }
+        .layout-classic .card { background: var(--bg-card); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow-sm); aspect-ratio: 0.8; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid var(--border); }
+        
+        /* 2. Modern Stack */
+        .layout-modern .content { padding: 20px; overflow-y: auto; flex: 1; }
+        .layout-modern .header-modern { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .layout-modern h2 { font-family: var(--font-body); font-weight: 700; font-size: 28px; }
+        .layout-modern .list-item { background: var(--bg-card); padding: 20px; border-radius: 16px; margin-bottom: 12px; box-shadow: var(--shadow-sm); display: flex; gap: 16px; align-items: center; }
+        .layout-modern .bottom-nav { height: 60px; background: var(--bg-card); border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; font-size: 10px; color: var(--text-secondary); }
+
+        /* 3. Focus Reader */
+        .layout-focus { display: flex; height: 100%; }
+        .layout-focus .sidebar { width: 80px; background: var(--bg-secondary); padding: 20px 0; display: flex; flex-direction: column; align-items: center; gap: 24px; border-right: 1px solid var(--border); }
+        .layout-focus .main { flex: 1; padding: 24px; overflow-y: auto; }
+        .layout-focus .article-card { background: var(--bg-card); padding: 32px; border-radius: 4px; box-shadow: var(--shadow-md); margin-bottom: 24px; line-height: 1.8; }
+        .layout-focus h3 { font-family: var(--font-heading); margin-bottom: 16px; font-size: 20px; }
+
+        /* 4. Gallery Grid */
+        .layout-gallery .header { padding: 20px; text-align: center; }
+        .layout-gallery .masonry { column-count: 2; column-gap: 16px; padding: 0 16px; }
+        .layout-gallery .img-card { break-inside: avoid; margin-bottom: 16px; border-radius: 16px; overflow: hidden; position: relative; }
+        .layout-gallery img { width: 100%; display: block; }
+        .layout-gallery .overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px; background: linear-gradient(transparent, rgba(0,0,0,0.6)); color: white; font-size: 12px; }
+
+        /* 5. Timeline Stream */
+        .layout-timeline { position: relative; }
+        .layout-timeline::before { content: ''; position: absolute; top: 0; bottom: 0; left: 32px; width: 2px; background: var(--border); z-index: 0; }
+        .layout-timeline .stream { padding: 20px 20px 20px 50px; overflow-y: auto; height: 100%; position: relative; z-index: 1; }
+        .layout-timeline .event { position: relative; margin-bottom: 32px; }
+        .layout-timeline .dot { position: absolute; left: -27px; top: 4px; width: 12px; height: 12px; background: var(--accent); border-radius: 50%; border: 2px solid var(--bg-primary); }
+        .layout-timeline .date { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; font-weight: 600; }
+        .layout-timeline .timeline-card { background: var(--bg-card); padding: 16px; border-radius: 12px; box-shadow: var(--shadow-sm); border: 1px solid var(--border); }
+
+        /* 6. Minimal Deck */
+        .layout-deck { display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 40px; background: #2C2420; color: white; }
+        .layout-deck .deck-card { width: 100%; aspect-ratio: 3/4; background: #F7F5F0; border-radius: 24px; color: #333; padding: 32px; display: flex; flex-direction: column; justify-content: center; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.3); transform: rotate(-2deg); }
+        .layout-deck .deck-card.next { position: absolute; transform: rotate(3deg) scale(0.95); z-index: -1; opacity: 0.5; }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <h1>UI Direction Variations (Warm Archive Theme)</h1>
+
+    <div class="container">
+
+        <!-- 1. Classic Library -->
+        <div class="variant-wrapper">
+            <div>
+                <div class="label">1. Classic Library</div>
+                <div class="description">전통적 서재 메타포, 명확한 그리드, 탐색 중심</div>
+            </div>
+            <div class="mockup layout-classic">
+                <div class="status-bar"><span>9:41</span><span>Library</span><span>🔋</span></div>
+                <div class="header">
+                    <h2>My Library</h2>
+                    <p style="font-size:13px; color:var(--text-secondary); margin-top:4px;">1,204 Fragments</p>
+                </div>
+                <div class="grid">
+                    <div class="card">
+                        <div style="height:60px; background:#EBE8E1; border-radius:4px; margin-bottom:12px;"></div>
+                        <h4 style="font-family:var(--font-heading); font-size:14px;">UX Principles</h4>
+                        <span style="font-size:11px; color:var(--text-secondary);">Oct 24</span>
+                    </div>
+                    <div class="card">
+                        <div style="height:60px; background:#EBE8E1; border-radius:4px; margin-bottom:12px;"></div>
+                        <h4 style="font-family:var(--font-heading); font-size:14px;">Growth Hacking</h4>
+                        <span style="font-size:11px; color:var(--text-secondary);">Oct 22</span>
+                    </div>
+                    <div class="card" style="background:var(--accent); color:white;">
+                        <h4 style="font-family:var(--font-heading); font-size:14px;">Design System</h4>
+                        <span style="font-size:11px; opacity:0.8;">Oct 20</span>
+                    </div>
+                    <div class="card">
+                        <div style="height:60px; background:#EBE8E1; border-radius:4px; margin-bottom:12px;"></div>
+                        <h4 style="font-family:var(--font-heading); font-size:14px;">React Native</h4>
+                        <span style="font-size:11px; color:var(--text-secondary);">Oct 18</span>
+                    </div>
+                </div>
+                <div class="fab">+</div>
+            </div>
+        </div>
+
+        <!-- 2. Modern Stack -->
+        <div class="variant-wrapper">
+            <div>
+                <div class="label">2. Modern Stack</div>
+                <div class="description">친숙한 모바일 패턴, 리스트형 피드, 하단 탭</div>
+            </div>
+            <div class="mockup layout-modern">
+                <div class="status-bar"><span>9:41</span><span>Home</span><span>🔋</span></div>
+                <div class="content">
+                    <div class="header-modern">
+                        <h2>Today</h2>
+                        <div style="width:32px; height:32px; background:#ddd; border-radius:50%;"></div>
+                    </div>
+                    <div class="list-item">
+                        <div style="width:40px; height:40px; background:#EBE8E1; border-radius:8px;"></div>
+                        <div>
+                            <h4 style="font-size:14px; margin-bottom:4px;">Product Vision</h4>
+                            <p style="font-size:12px; color:var(--text-secondary);">Moments is not just a tool...</p>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <div style="width:40px; height:40px; background:#EBE8E1; border-radius:8px;"></div>
+                        <div>
+                            <h4 style="font-size:14px; margin-bottom:4px;">Technical Stack</h4>
+                            <p style="font-size:12px; color:var(--text-secondary);">React Native + Expo...</p>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <div style="width:40px; height:40px; background:#EBE8E1; border-radius:8px;"></div>
+                        <div>
+                            <h4 style="font-size:14px; margin-bottom:4px;">Market Analysis</h4>
+                            <p style="font-size:12px; color:var(--text-secondary);">Competitor landscape...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom-nav">
+                    <span>🏠 Home</span>
+                    <span>🔍 Search</span>
+                    <div style="width:40px; height:40px; background:var(--accent); border-radius:12px; margin-bottom:20px; display:flex; align-items:center; justify-content:center; color:white; font-size:20px;">+</div>
+                    <span>📚 Library</span>
+                    <span>👤 Me</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Focus Reader -->
+        <div class="variant-wrapper">
+            <div>
+                <div class="label">3. Focus Reader</div>
+                <div class="description">읽기 몰입 최적화, 사이드바 구조, 텍스트 중심</div>
+            </div>
+            <div class="mockup layout-focus">
+                <div class="sidebar">
+                    <div style="width:32px; height:32px; border:2px solid var(--text-primary); border-radius:8px;"></div>
+                    <div style="width:24px; height:2px; background:var(--text-secondary);"></div>
+                    <div style="width:24px; height:2px; background:var(--text-secondary);"></div>
+                    <div style="width:24px; height:2px; background:var(--text-secondary);"></div>
+                </div>
+                <div class="main">
+                    <div class="article-card">
+                        <span style="font-size:11px; text-transform:uppercase; color:var(--accent); font-weight:600; display:block; margin-bottom:12px;">Architecture</span>
+                        <h3>WACZ Archiving</h3>
+                        <p style="font-size:14px; color:var(--text-secondary);">
+                            Web Archive Collection Zipped format ensures full fidelity preservation of web content...
+                        </p>
+                    </div>
+                    <div class="article-card">
+                        <span style="font-size:11px; text-transform:uppercase; color:var(--accent); font-weight:600; display:block; margin-bottom:12px;">Design</span>
+                        <h3>Warm Archive Theme</h3>
+                        <p style="font-size:14px; color:var(--text-secondary);">
+                            Using paper textures and warm tones to create a sense of trust and comfort...
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Gallery Grid -->
+        <div class="variant-wrapper">
+            <div>
+                <div class="label">4. Gallery Grid</div>
+                <div class="description">이미지 중심, 핀터레스트 스타일, 시각적 탐색</div>
+            </div>
+            <div class="mockup layout-gallery">
+                <div class="status-bar"><span>9:41</span><span>Gallery</span><span>🔋</span></div>
+                <div class="header">
+                    <h2 style="font-family:var(--font-heading);">Inspiration</h2>
+                </div>
+                <div class="masonry">
+                    <div class="img-card" style="height:140px; background:#ddd;">
+                        <div class="overlay">Interior Design</div>
+                    </div>
+                    <div class="img-card" style="height:200px; background:#bbb;">
+                        <div class="overlay">Typography</div>
+                    </div>
+                    <div class="img-card" style="height:180px; background:#ccc;">
+                        <div class="overlay">Color Palette</div>
+                    </div>
+                    <div class="img-card" style="height:150px; background:#eee;">
+                        <div class="overlay">Layouts</div>
+                    </div>
+                </div>
+                <div class="fab">+</div>
+            </div>
+        </div>
+
+        <!-- 5. Timeline Stream -->
+        <div class="variant-wrapper">
+            <div>
+                <div class="label">5. Timeline Stream</div>
+                <div class="description">시간 흐름 강조, 기록의 연속성, 일기 메타포</div>
+            </div>
+            <div class="mockup layout-timeline">
+                <div class="status-bar"><span>9:41</span><span>Journal</span><span>🔋</span></div>
+                <div class="stream">
+                    <div class="event">
+                        <div class="dot"></div>
+                        <div class="date">Today, 2:30 PM</div>
+                        <div class="timeline-card">
+                            <h4 style="font-size:14px; margin-bottom:4px;">Metacognition</h4>
+                            <p style="font-size:12px; color:var(--text-secondary);">Thinking about thinking is the key to learning...</p>
+                        </div>
+                    </div>
+                    <div class="event">
+                        <div class="dot"></div>
+                        <div class="date">Yesterday, 9:00 PM</div>
+                        <div class="timeline-card" style="background:#F2EFE9">
+                            <h4 style="font-size:14px; margin-bottom:4px;">Night Reflection</h4>
+                            <p style="font-size:12px; color:var(--text-secondary);">Today was productive. I learned about...</p>
+                        </div>
+                    </div>
+                    <div class="event">
+                        <div class="dot"></div>
+                        <div class="date">Oct 15</div>
+                        <div class="timeline-card">
+                            <h4 style="font-size:14px; margin-bottom:4px;">React Conf</h4>
+                            <p style="font-size:12px; color:var(--text-secondary);">Key takeaways from the keynote...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Minimal Deck -->
+        <div class="variant-wrapper">
+            <div>
+                <div class="label">6. Minimal Deck</div>
+                <div class="description">몰입형 카드, 숏폼 스타일, 한 번에 하나씩</div>
+            </div>
+            <div class="mockup layout-deck">
+                <div class="status-bar" style="width:100%; margin-bottom:20px;"><span>9:41</span><span>Focus</span><span>🔋</span></div>
+                <div style="position:relative; width:100%;">
+                    <div class="deck-card next"></div>
+                    <div class="deck-card">
+                        <span style="font-size:12px; text-transform:uppercase; letter-spacing:2px; margin-bottom:24px; display:block;">Daily Wisdom</span>
+                        <h2 style="font-family:var(--font-heading); font-size:28px; line-height:1.4; margin-bottom:24px;">"Knowledge is not just storing information, but connecting it."</h2>
+                        <p style="font-size:14px; color:#666;">- Note to Self</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

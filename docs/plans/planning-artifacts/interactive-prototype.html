@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Moments: Interactive Prototype</title>
+    <style>
+        /* Warm Archive Design Tokens */
+        :root {
+            --bg-primary: #F7F5F0;
+            --bg-secondary: #EBE8E1;
+            --bg-card: #FFFFFF;
+            --text-primary: #2C2420;
+            --text-secondary: #5D5550;
+            --accent: #8C5E45;
+            --accent-light: #F0E6DE;
+            --border: #DCD6CE;
+            --success: #4A6B56;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 8px;
+            --shadow-sm: 0 2px 8px rgba(44, 36, 32, 0.04);
+            --shadow-md: 0 8px 24px rgba(44, 36, 32, 0.08);
+            --font-heading: "Merriweather", serif;
+            --font-body: "Inter", sans-serif;
+            --safe-area-top: env(safe-area-inset-top, 20px);
+            --safe-area-bottom: env(safe-area-inset-bottom, 20px);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            background-color: #222;
+            font-family: var(--font-body);
+            color: var(--text-primary);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Device Frame */
+        .device {
+            width: 375px;
+            height: 812px;
+            background: var(--bg-primary);
+            border-radius: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 0 10px #333, 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        /* Views Container */
+        .views {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .view {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.2, 0.0, 0.2, 1);
+            z-index: 1;
+            padding-bottom: 80px; /* Tab bar space */
+        }
+
+        .view.hidden {
+            display: none;
+        }
+
+        .view.slide-in {
+            transform: translateX(100%);
+            z-index: 10;
+        }
+        
+        .view.slide-in.active {
+            transform: translateX(0);
+        }
+
+        .view.modal {
+            transform: translateY(100%);
+            z-index: 20;
+            border-radius: 24px 24px 0 0;
+            padding-top: 20px;
+            background: var(--bg-card);
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.1);
+        }
+
+        .view.modal.active {
+            transform: translateY(40px); /* Leave top gap */
+        }
+
+        /* Header */
+        .header {
+            padding: calc(var(--safe-area-top) + 20px) 20px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-primary);
+            z-index: 5;
+        }
+
+        h1 { font-family: var(--font-heading); font-size: 28px; font-weight: 700; }
+        h2 { font-family: var(--font-heading); font-size: 20px; font-weight: 600; margin-bottom: 12px; }
+
+        /* Content Scroll */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            padding-bottom: 100px;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            transition: transform 0.1s;
+            cursor: pointer;
+        }
+
+        .card:active { transform: scale(0.98); }
+
+        .card-tag {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            margin-bottom: 8px;
+            display: block;
+            font-weight: 600;
+        }
+
+        .card h3 {
+            font-family: var(--font-heading);
+            font-size: 18px;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Grid Layout for Library */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .grid .card {
+            margin-bottom: 0;
+            aspect-ratio: 0.8;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* FAB */
+        .fab {
+            position: absolute;
+            bottom: 90px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            z-index: 10;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .fab:active { transform: scale(0.9); }
+
+        /* Tab Bar */
+        .tab-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-around;
+            padding-top: 10px;
+            padding-bottom: var(--safe-area-bottom);
+            z-index: 10;
+        }
+
+        .tab {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            color: var(--text-secondary);
+            font-size: 10px;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .tab.active { color: var(--accent); }
+        .tab-icon { font-size: 20px; }
+
+        /* Capture Modal Specifics */
+        .modal-handle {
+            width: 40px;
+            height: 4px;
+            background: #CCC;
+            border-radius: 2px;
+            margin: 0 auto 20px;
+        }
+
+        .mood-selector {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .mood-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .mood-btn.selected { transform: scale(1.2); border-color: var(--text-primary); }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: auto;
+        }
+
+        .toast {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--text-primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 14px;
+            opacity: 0;
+            transition: all 0.3s;
+            pointer-events: none;
+            z-index: 100;
+            white-space: nowrap;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Loading Animation (Developing) */
+        .developing-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .developing-overlay.show { opacity: 1; pointer-events: all; }
+
+        .dev-img {
+            width: 200px;
+            height: 150px;
+            background: #ddd;
+            margin-bottom: 20px;
+            filter: blur(20px) grayscale(100%);
+            transition: filter 2s ease-in-out;
+        }
+
+        .developing-overlay.active .dev-img {
+            filter: blur(0) grayscale(0%);
+        }
+
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="device">
+        <!-- Toast -->
+        <div class="toast" id="toast">소중히 보관했어요 🍂</div>
+
+        <!-- Developing Overlay -->
+        <div class="developing-overlay" id="devOverlay">
+            <div class="dev-img" style="background: url('https://picsum.photos/200/150') center/cover;"></div>
+            <p>기억을 현상하는 중...</p>
+        </div>
+
+        <!-- View 1: Home (Modern Stack) -->
+        <div class="view" id="view-home">
+            <div class="header">
+                <h1>Today</h1>
+                <div style="width:32px; height:32px; background:#ddd; border-radius:50%;"></div>
+            </div>
+            <div class="content">
+                <div class="card" onclick="showDetail()">
+                    <span class="card-tag">INSIGHT</span>
+                    <h3>The Power of Small Wins</h3>
+                    <p>Celebrating small achievements triggers dopamine and builds momentum for larger goals.</p>
+                </div>
+                <div class="card" onclick="showDetail()">
+                    <span class="card-tag">DESIGN</span>
+                    <h3>Warm Archive Theme</h3>
+                    <p>Using paper textures creates a sense of comfort and trust, unlike sterile digital interfaces.</p>
+                </div>
+                <div class="card" onclick="showDetail()">
+                    <span class="card-tag">TECH</span>
+                    <h3>React Native Architecture</h3>
+                    <p>Why we chose React Native + Expo for cross-platform consistency and developer experience.</p>
+                </div>
+                <div class="card" style="opacity:0.6">
+                    <span class="card-tag">YESTERDAY</span>
+                    <h3>Understanding Users</h3>
+                    <p>Empathy is the foundation of all good product design.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- View 2: Library (Classic Grid) -->
+        <div class="view hidden" id="view-library">
+            <div class="header">
+                <h1>Library</h1>
+                <span style="font-size:20px;">🔍</span>
+            </div>
+            <div class="content">
+                <div class="grid">
+                    <div class="card" onclick="showDetail()">
+                        <span class="card-tag">UX</span>
+                        <h3>Simplicity</h3>
+                    </div>
+                    <div class="card" onclick="showDetail()">
+                        <span class="card-tag">DEV</span>
+                        <h3>React</h3>
+                    </div>
+                    <div class="card" onclick="showDetail()">
+                        <span class="card-tag">LIFE</span>
+                        <h3>Habits</h3>
+                    </div>
+                    <div class="card" onclick="showDetail()">
+                        <span class="card-tag">ART</span>
+                        <h3>Colors</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View 3: Journal (Timeline) -->
+        <div class="view hidden" id="view-journal">
+            <div class="header">
+                <h1>Journal</h1>
+            </div>
+            <div class="content">
+                <div style="padding-left: 20px; border-left: 2px solid var(--border);">
+                    <div style="position:relative; margin-bottom: 30px;">
+                        <div style="position:absolute; left:-26px; top:0; width:10px; height:10px; background:var(--accent); border-radius:50%;"></div>
+                        <span style="font-size:12px; color:var(--text-secondary); font-weight:600;">Today, 9:00 PM</span>
+                        <div class="card" style="margin-top:8px;">
+                            <h3>Daily Reflection</h3>
+                            <p>Today was productive. I learned about the importance of rest.</p>
+                        </div>
+                    </div>
+                    <div style="position:relative; margin-bottom: 30px;">
+                        <div style="position:absolute; left:-26px; top:0; width:10px; height:10px; background:var(--border); border-radius:50%;"></div>
+                        <span style="font-size:12px; color:var(--text-secondary); font-weight:600;">Yesterday</span>
+                        <div class="card" style="margin-top:8px; opacity:0.7;">
+                            <h3>Project Kickoff</h3>
+                            <p>Started the new project with high energy.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Capture Modal -->
+        <div class="view modal" id="modal-capture">
+            <div class="content" style="padding-bottom: 20px;">
+                <div class="modal-handle"></div>
+                <h2>New Memory</h2>
+                <div class="card" style="background:#F9F9F9; box-shadow:none; border:1px dashed #CCC;">
+                    <div style="height:120px; background:#EEE; border-radius:8px; margin-bottom:12px; display:flex; align-items:center; justify-content:center; color:#999;">
+                        Preview Image
+                    </div>
+                    <h3>Shared Content Title</h3>
+                    <p>https://example.com/article/123</p>
+                </div>
+
+                <div class="mood-selector">
+                    <div class="mood-btn" style="background:#D4A24E;" onclick="selectMood(this)"></div>
+                    <div class="mood-btn" style="background:#4A6B56;" onclick="selectMood(this)"></div>
+                    <div class="mood-btn selected" style="background:#8C5E45;" onclick="selectMood(this)"></div>
+                    <div class="mood-btn" style="background:#B85C5C;" onclick="selectMood(this)"></div>
+                    <div class="mood-btn" style="background:#5D5550;" onclick="selectMood(this)"></div>
+                </div>
+
+                <textarea style="width:100%; height:80px; border:1px solid var(--border); border-radius:12px; padding:12px; font-family:var(--font-body); margin-bottom:20px;" placeholder="Add a note (optional)..."></textarea>
+
+                <button class="btn-primary" onclick="saveCapture()">Capture Moment</button>
+            </div>
+        </div>
+
+        <!-- Detail View (Minimal Deck) -->
+        <div class="view slide-in" id="view-detail" style="background:#2C2420;">
+            <div class="header" style="background:transparent; color:white;">
+                <span onclick="hideDetail()" style="cursor:pointer;">← Back</span>
+                <span>Detail</span>
+                <span>⋮</span>
+            </div>
+            <div class="content" style="display:flex; flex-direction:column; justify-content:center; padding-bottom:40px;">
+                <div class="card" style="background:#F7F5F0; height:60%; display:flex; flex-direction:column; justify-content:center; text-align:center; transform:rotate(-1deg);">
+                    <span class="card-tag">INSIGHT</span>
+                    <h2 style="font-size:28px; margin-bottom:24px;">"Simplicity is the ultimate sophistication."</h2>
+                    <p style="font-size:16px;">- Leonardo da Vinci</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Global Elements -->
+        <div class="fab" id="fab" onclick="openCapture()">+</div>
+
+        <div class="tab-bar">
+            <div class="tab active" onclick="switchTab('home')">
+                <span class="tab-icon">🏠</span>
+                <span>Home</span>
+            </div>
+            <div class="tab" onclick="switchTab('library')">
+                <span class="tab-icon">📚</span>
+                <span>Library</span>
+            </div>
+            <div class="tab" onclick="switchTab('journal')">
+                <span class="tab-icon">✍️</span>
+                <span>Journal</span>
+            </div>
+            <div class="tab">
+                <span class="tab-icon">👤</span>
+                <span>Me</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation Logic
+        function switchTab(tabName) {
+            // Update Tab UI
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            // Hide all views
+            document.querySelectorAll('.view:not(.modal):not(.slide-in)').forEach(v => v.classList.add('hidden'));
+            
+            // Show selected view
+            document.getElementById(`view-${tabName}`).classList.remove('hidden');
+
+            // Reset scroll
+            document.getElementById(`view-${tabName}`).querySelector('.content').scrollTop = 0;
+        }
+
+        // Capture Flow
+        function openCapture() {
+            document.getElementById('modal-capture').classList.add('active');
+            document.getElementById('fab').style.transform = 'scale(0)';
+        }
+
+        function closeCapture() {
+            document.getElementById('modal-capture').classList.remove('active');
+            document.getElementById('fab').style.transform = 'scale(1)';
+        }
+
+        function selectMood(el) {
+            document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+
+        function saveCapture() {
+            closeCapture();
+            
+            // Show Developing Animation
+            const devOverlay = document.getElementById('devOverlay');
+            devOverlay.classList.add('show');
+            setTimeout(() => devOverlay.classList.add('active'), 100);
+
+            // Finish Developing & Show Toast
+            setTimeout(() => {
+                devOverlay.classList.remove('active');
+                devOverlay.classList.remove('show');
+                
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3000);
+            }, 2000);
+        }
+
+        // Detail Flow
+        function showDetail() {
+            document.getElementById('view-detail').classList.add('active');
+        }
+
+        function hideDetail() {
+            document.getElementById('view-detail').classList.remove('active');
+        }
+
+        // FAB Scroll Behavior
+        let lastScrollTop = 0;
+        document.querySelectorAll('.content').forEach(content => {
+            content.addEventListener('scroll', function() {
+                let st = this.scrollTop;
+                if (st > lastScrollTop && st > 50) {
+                    document.getElementById('fab').style.transform = 'translateY(100px)';
+                } else {
+                    document.getElementById('fab').style.transform = 'translateY(0)';
+                }
+                lastScrollTop = st;
+            });
+        });
+    </script>
+</body>
+</html>

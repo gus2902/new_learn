@@ -1,89 +1,36 @@
 # Workflow Status
-# Last Updated: 2026-01-13
-# Project: Moments: Mind Studio
-# Project Type: Greenfield
-# Selected Track: method
-# Field Type: greenfield
 
-generated: "2026-01-08"
-last_updated: "2026-01-13"
-project: "Moments: Mind Studio"
-project_type: "greenfield"
-selected_track: "method"
-field_type: "greenfield"
-workflow_path: "method-greenfield.yaml"
+# This tracks progress through BMM methodology Analysis, Planning, and Solutioning phases.
+# Implementation phase is tracked separately in sprint-status.yaml
 
-current_phase: "implementation"
-current_sprint: "phase-0"
-next_action: "Start MVP Sprint 1 (EP-CAPTURE) or complete proto-02"
+# STATUS DEFINITIONS:
+# ==================
+# Initial Status (before completion):
+#   - required: Must be completed to progress
+#   - optional: Can be completed but not required
+#   - recommended: Strongly suggested but not required
+#   - conditional: Required only if certain conditions met (e.g., if_has_ui)
+#
+# Completion Status:
+#   - {file-path}: File created/found (e.g., "docs/product-brief.md")
+#   - skipped: Optional/conditional workflow that was skipped
 
-planning_status:
-  - id: create-product-brief
-    name: "Product Brief"
-    status: "docs/plans/moments-mind-studio-product-brief.md"
-    priority: "required"
-  - id: research
-    name: "Research"
-    status: "docs/plans/planning-artifacts/research/market-global-pkm-ai-painpoints-research-2026-01-10.md"
-    priority: "recommended"
-  - id: create-ux-design
-    name: "UX Design"
-    status: "docs/plans/planning-artifacts/ux-design-specification.md"
-    priority: "recommended"
-  - id: create-prd
-    name: "PRD"
-    status: "docs/plans/planning-artifacts/prd.md"
-    priority: "required"
-  - id: create-architecture
-    name: "Architecture"
-    status: "docs/plans/planning-artifacts/architecture.md"
-    priority: "required"
-  - id: create-epics-and-stories
-    name: "Epics & Stories"
-    status: "docs/plans/planning-artifacts/user-stories.md"
-    priority: "required"
-  - id: implementation-readiness
-    name: "Implementation Readiness Check"
-    status: "docs/plans/planning-artifacts/implementation-readiness-report-2026-01-12.md"
-    priority: "required"
-    score: "95/100"
-    decision: "GO"
-
-implementation_status:
-  phase_0:
-    name: "Phase 0: 기술 검증"
-    status: "in-progress"
-    decision: "GO"
-    stories:
-      - id: proto-01-2sec-capture-poc
-        name: "2초 캡처 기술 PoC"
-        status: "done"
-        completed: "2026-01-13"
-        benchmark: "docs/plans/implementation-artifacts/benchmark-report-2026-01-13.md"
-      - id: proto-02-background-wacz-poc
-        name: "백그라운드 WACZ 아카이빙 PoC"
-        status: "backlog"
-  mvp:
-    name: "MVP Phase"
-    status: "pending"
-    epics:
-      - ep-capture
-      - ep-onboarding
-      - ep-graph
-      - ep-journal
-      - ep-search
-      - ep-growth
-
-key_files:
-  sprint_status: "docs/plans/implementation-artifacts/sprint-status.yaml"
-  benchmark_report: "docs/plans/implementation-artifacts/benchmark-report-2026-01-13.md"
-  story_files: "docs/plans/implementation-artifacts/stories/"
-  backend: "apps/backend/"
-  mobile: "apps/mobile/"
-
-session_notes: |
-  2026-01-13 세션 완료:
-  - Phase 0-D 벤치마크 완료 (10/10 사이트 성공, 100% 성공률)
-  - Go/No-Go 결정: GO (p50=0ms, 성공률 100%)
-  - proto-01 스토리 완료
-  - 다음 단계: MVP Sprint 1 시작 또는 proto-02 완료
+generated: "2026-01-17T13:23:00+09:00"
+project: "moments"
+project_type: "fullstack"
+project_level: "3"
+selected_track: "bmad-method"
+field_type: "brownfield"
+workflow_path: "{project-root}/_bmad/bmm/workflows/workflow-status/paths/method-brownfield.yaml"
+workflow_status:
+  document-project: skipped
+  brainstorm-project: skipped
+  research: "docs/plans/planning-artifacts/research/"
+  product-brief: "docs/plans/moments-mind-studio-product-brief.md"
+  prd: "docs/plans/planning-artifacts/prd.md"
+  create-ux-design: "docs/plans/planning-artifacts/ux-design-specification.md"
+  create-architecture: "docs/plans/planning-artifacts/architecture.md"
+  create-epics-and-stories: required
+  test-design: optional
+  implementation-readiness: required
+  sprint-planning: required

@@ -1,612 +1,379 @@
-# UX Design Specification - Moments: Mind Studio
+---
+stepsCompleted: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+inputDocuments:
+  - "docs/plans/moments-mind-studio-product-brief.md"
+  - "docs/plans/planning-artifacts/prd.md"
+---
 
-**Project:** Moments: Mind Studio
-**Date:** 2026-01-12 (복구)
-**Version:** 1.1
+# UX Design Specification moments
+
+**Author:** 마스터
+**Date:** 2026-01-17
 
 ---
+
+<!-- UX design content will be appended sequentially through collaborative workflow steps -->
 
 ## Executive Summary
 
 ### Project Vision
-
-Moments: Mind Studio는 **"Digital Darkroom (디지털 암실)"** 컨셉의 지식 사진관입니다. 사용자가 저장한 정보들이 마치 필름처럼 서서히 현상되어 의미 있는 지식으로 연결되고, 자신의 관심사와 삶의 궤적을 되돌아볼 수 있는 **자아 회복 솔루션**입니다.
-
-### Design Philosophy
-
-> **"Developing Thoughts" (생각을 현상하다)**
-
-- 미정리 상태 = "가능성의 상태", "현상 대기 중인 필름"으로 긍정적 재정의
-- AI는 조용한 조수: 설명 없는 자동화 금지, 반드시 근거(키워드) 노출 및 사용자 수정 가능
-- 정보 시각화: 텍스트 링크 대신 비주얼 카드 군집으로 연관성 표현
+Moments는 정보 관리 도구가 아니라, 사용자가 자신의 지식과 감정을 되찾는 "지식 사진관" 경험을 제공한다. 핵심은 2초 캡처 → 자동 연결 → 밤 9시 일기 루틴으로 이어지는 일상적 리듬을 만드는 것이다. 따뜻한 서재/갤러리 톤, 폴라로이드 메타포, 여백 중심의 레이아웃을 통해 감정적으로 안전한 공간을 만든다.
 
 ### Target Users
+지식을 좋아하지만 정리에 지친 현대인. 출퇴근 중 모바일로 빠르게 캡처하고, 필요 시 웹에서 정리/재발견한다. 기술 친숙도는 중간 수준으로, 복잡한 설정 없이 바로 이해되는 흐름이 필요하다.
 
-**Primary Persona:**
-- 지식을 사랑하지만 정리에 지친 현대인
-- 정보 수집을 즐기지만 정리할 시간과 에너지가 부족
-- 바쁜 일상 속에서 '나'를 잃어가고 있다는 막연한 불안감
+### Key Design Challenges
+- 출퇴근 맥락에서도 2초 내에 캡처/기록이 가능한 "초저마찰" 흐름 설계
+- 자동 연결과 분류 결과를 신뢰하게 만드는 설명/피드백 UX
+- "정리된 지식이 한눈에 보이는 순간"을 빠르게 제공하는 정보 구조
 
-**Key Personas from PRD:**
-- 이지훈 (32세 PM): 정보 과부하, 일과 삶 균형 재발견
-- 마커스 첸 (35세 Architect): 회의론자, Anti-productivity 전환
-- Dr. Yuki Tanaka (42세 Psychiatrist): 프라이버시 극도로 민감
-
-### Design Challenges
-
-1. **2초 캡처 UX**: 복잡한 백엔드 처리(WACZ, 임베딩)를 사용자에게 투명하게
-2. **제로 프릭션 정리**: 폴더/태그 없이 자동 연결의 신뢰감 구축
-3. **Deep Space 테마**: 어두운 배경에서의 가독성과 접근성
-4. **Mobile-Desktop 동등 비중**: 캡처는 모바일, 성찰은 데스크톱 모두 중요
-
----
+### Design Opportunities
+- 모바일(Android) 우선 UX로 캡처→간단 분류→정리 감각을 즉시 제공
+- 웹에서 '정리된 지식'의 가시화를 강화(테마/타임라인/무드 기반 뷰)
+- "나의 지식이 되었다"는 감정을 강화하는 큐레이션/리플렉션 패턴
 
 ## Core User Experience
 
-### Primary Actions
-
-**"Capture & Connect"** - 두 가지 핵심 행동:
-
-1. **Capture (캡처)**: 2초 안에 완료, 방해 없이 흐름 유지
-2. **Connect (연결)**: AI가 자동으로 맥락 연결, 사용자는 발견의 기쁨만
+### Defining Experience
+핵심 경험은 "빠른 캡처"에 있다. 사용자는 생각 없이 스크랩하고, 이후 자동 정리를 통해 지식이 쌓였다는 감각을 얻는다. 핵심 루프는 "스크랩 → 정리 → 탐색 → 하루일기 → 개인 지식화"로 이어진다.
 
 ### Platform Strategy
+- Android 앱: 캡처 중심
+- 웹(PC): 정리 중심
+- 탐색/일기: 모바일과 웹 모두 지원
+- 오프라인: 가능한 최대치까지 지원하여 프라이버시와 데이터 소유 문제를 해결
 
-| Platform | Primary Use Cases | Priority |
-|----------|-------------------|----------|
-| **Mobile (iOS/Android)** | 캡처, 일기 작성, 빠른 검색 | ⭐⭐⭐⭐⭐ |
-| **Desktop (Web)** | 그래프 탐색, 깊은 성찰, 장문 일기 | ⭐⭐⭐⭐⭐ |
-| **Browser Extension** | 데스크톱 캡처 | ⭐⭐⭐⭐ |
+### Effortless Interactions
+- 사용자는 "정리해야 한다"는 부담 없이 스크랩만 하면 된다
+- 자동 정리(메타데이터/요약/문서화)와 자동 연결(지식 그래프)은 사용자 개입 없이 이루어진다
+- 캡처 직후 "정리되는 느낌"을 주는 즉각 피드백 제공
 
-**동등 비중 원칙**: Mobile-First이지만 Desktop 경험도 동등하게 중요
+### Critical Success Moments
+- 사용자가 정리 스트레스 없이 스크랩하고 있는 자신을 발견하는 순간
+- 첫 사용에서 "자동 정리 결과가 만족스럽다"는 확신을 얻는 순간
 
-### Signature Interaction: "The Spark of Insight"
+### Experience Principles
+- 초저마찰 캡처: 생각 없이 스크랩 가능해야 한다
+- 자동 정리 신뢰성: 정리가 가장 완벽해야 하며 실패하면 경험이 무너진다
+- 오프라인 우선: 데이터 소유·프라이버시를 체감하게 한다
+- 정리의 가시성: "내 지식이 되었다"는 결과를 즉시 보여준다
 
-**시그니처 인터랙션** - 자동 연결이 발견될 때의 시각적 피드백:
+## Desired Emotional Response
 
-1. **Magnetic Pull**: 관련 카드들이 자석처럼 서로 끌려옴
-2. **Glow Effect**: 연결된 카드들이 부드럽게 빛남
-3. **Spark Animation**: 연결선이 형성될 때 작은 불꽃 효과
-4. **Soft Sound**: 선택적 효과음 (설정에서 끄기 가능)
+### Primary Emotional Goals
+- 핵심 감정: 신뢰
+- 추천/입소문을 유도하는 감정: 성취감
+- 핵심 행동 직후: 뿌듯함/성취감/안도감
+- 경쟁 서비스와의 차별 감정: 부담감(경쟁) → 편안함(우리)
 
-```
-[Card A] ~~~spark~~~ [Card B]
-    \                  /
-     \    ✨glow✨    /
-      \              /
-       [Connection]
-```
+### Emotional Journey Mapping
+- 첫 발견: "또 스크랩앱이야?"라는 지겨움
+- 사용 중: "어.. 좀 다르네"라는 색다름/신선함
+- 완료 후: "오~ 좋다"라는 긍정/편안함
+- 문제 발생 시: "곧 알아서 정리될 거야"라는 안심/신뢰
 
----
+### Micro-Emotions
+- 신뢰 vs 의심
+- 성취 vs 좌절
+- 즐거움 vs 무감각
+
+### Design Implications
+- 자동 정리 상태 가시화(진행/완료/대기)와 결과 미리보기 제공
+- 정리 결과를 즉시 보여주는 "오늘의 정리 카드" 영역
+- 신뢰를 주는 마이크로카피("알아서 정리해둘게요", "곧 준비됩니다")
+- 성취감 피드백(작은 완성 표시, 오늘의 지식 1개 완성)
+- 오류 시 '실패' 대신 '진행 중/곧 완료' 톤으로 안정감 유지
+
+### Emotional Design Principles
+- 부담을 덜고 편안함을 주는 톤
+- 자동화 결과를 눈으로 확인하게 해 신뢰 확보
+- 작은 성취를 자주 보여주는 리듬
+
+## UX Pattern Analysis & Inspiration
+
+### Inspiring Products Analysis
+- Obsidian: 심플한 기본 흐름, 커스터마이즈 강점이 있으나 과도한 설정은 피하고 싶음
+- Notion: "대충해도 예쁨"이 주는 만족감, DB 구조의 정돈된 감각
+- Evernote: 매우 간단한 UX와 안정적인 동기화 경험
+
+### Transferable UX Patterns
+- 기본 화면의 심플함(Obsidian/Evernote): 최소 기능으로 시작하는 첫 화면
+- "대충해도 예쁨"(Notion): 기본 템플릿/카드 자동 정렬로 즉시 미려한 결과
+- 정리 결과의 구조화(Notion DB): 자동 분류 결과를 명확한 구조로 보여주기
+- 신뢰 기반 동기화 감각(Evernote): 정리/동기화 상태의 가시화
+
+### Anti-Patterns to Avoid
+- 과도한 커스터마이즈 옵션 제공(설정 과다, 복잡한 선택지)
+- 시작부터 복잡한 정보 구조 강요
+- 정리 과정을 사용자가 직접 설계해야 하는 경험
+
+### Design Inspiration Strategy
+**Adopt**
+- 기본 화면의 심플함(Evernote/Obsidian)
+- "대충해도 예쁜 결과"를 주는 자동 레이아웃/카드 정렬(Notion)
+
+**Adapt**
+- Notion의 DB 구조 → 자동 정리 결과를 "보여주는 구조"로 축소 적용
+- Obsidian의 유연성 → 옵션 최소화된 '추천 정리'로 변환
+
+**Avoid**
+- 커스터마이즈 과다
+- 복잡한 설정/분류 요구
 
 ## Design System Foundation
 
-### Technology Stack
+### 1.1 Design System Choice
+- 크로스플랫폼 통일: React Native + Expo + Tamagui
+- iOS/Android/Web 공통 컴포넌트 체계 사용
+- 공통 토큰(색/타입/간격/라디우스) 기반 일관성 유지
 
-| Layer | Technology | Purpose |
-|-------|------------|---------|
-| **Framework** | Next.js 15+ (App Router) | Web Application |
-| **UI Components** | Shadcn UI | Accessible, Customizable Components |
-| **Styling** | Tailwind CSS | Utility-first CSS |
-| **Animation** | Framer Motion | Smooth Transitions, Morphing |
-| **Icons** | Lucide React | Consistent Icon Set |
-| **Cross-platform** | Tamagui | React Native + Web 공유 컴포넌트 |
+### Rationale for Selection
+- 운영 간소화: 단일 컴포넌트/토큰으로 유지보수 비용 최소화
+- 초·중급 팀에 적합한 DX 및 문서/생태계
+- 브랜드가 없으므로 토큰 기반으로 점진적 브랜딩 구축 가능
+- 모바일·웹 UX 일관성 확보
 
-### Why This Stack
+### Implementation Approach
+- 1차: 기본 컴포넌트 + 최소 커스터마이즈로 MVP
+- 2차: 토큰 확정 후 테마 확장
+- 3차: 핵심 화면에만 커스텀 컴포넌트 추가
 
-1. **Shadcn UI**: Radix primitives 기반, 완전한 커스터마이징 가능, 접근성 내장
-2. **Framer Motion**: `layoutId`로 MorphingCard 구현, GPU 가속
-3. **Tailwind**: 1인 개발자에게 최적, Design Token 관리 용이
-4. **Lucide**: Shadcn과 완벽 호환, 일관된 아이콘 스타일
+### Customization Strategy
+- "심플함 + 대충해도 예쁨"을 기본값으로 설계
+- 사용자 커스터마이즈는 최소화
+- 자동 정리 상태/결과 가시화를 위한 카드/상태 컴포넌트 우선 설계
 
----
+## 2. Core User Experience
+
+### 2.1 Defining Experience
+“정리하지 않아도 되는, 자동으로 정리되는 스크랩 경험.”
+
+### 2.2 User Mental Model
+- 현재 해결 방식: 북마크, Notion 저장, Obsidian 클리핑, 카카오톡 내게 보내기 등 분산 수집
+- 기대: 공유하기/URL 입력만 하면 핵심이 추출되고 의미 있는 지식으로 정리됨
+- 혼란 지점: “스크랩 앱인가? 일기 앱인가?”의 정체성 혼선
+  - 정리 방향: 스크랩이 핵심, 일기는 감성/성찰을 통해 개인 지식화로 이어지는 보조 경험
+
+### 2.3 Success Criteria
+- 웹 데이터가 광고/불필요 요소 없이 ‘정리된 문서’로 전환됨
+- 정리된 데이터가 유관 데이터와 자동 연결되어 지식으로 확장됨
+- 연결된 지식이 사용자 성찰을 유도해 ‘나를 더 잘 알게 됨’
+- 속도: 캡처는 2초 이내, 정리는 10분 이내(현상되는 느낌)
+
+### 2.4 Novel UX Patterns
+- 기존 패턴(캡처+자동 정리)로 충분함
+- 교육/튜토리얼 의존은 지양
+
+### 2.5 Experience Mechanics
+**1) Initiation**
+- 모바일/웹에서 공유하기로 솔루션에 전달 또는 URL 붙여넣기
+
+**2) Interaction**
+- 공유/저장 → 정리된 카드 확인 → 연결된 지식 탐색 → 저녁 일기 작성
+
+**3) Feedback**
+- 성공: 사진 인화처럼 정리된 카드 묶음 제공
+- 진행: 암실에서 현상되는 듯한 은은한 진행 상태
+- 오류: 낡은 사진 카드 + “도움이 필요해요” 톤
+  - 사용자가 일부 수정/자료 보강 → 시스템이 재현상
+  - 옵션: 사용자 직접 수정으로 시스템 자동 보정 비활성화 가능(명확한 토글/설명 포함)
+
+**4) Completion**
+- 완료: 당일 정리된 데이터로 일기 마무리
+- 다음: 축적된 데이터로 과거 회상/자기 성찰
 
 ## Visual Design Foundation
 
-### Color System: Deep Space Theme
+### Color System
+**Theme: Warm Archive**
+- Primary: #8C5E45 (Warm Brown) - 신뢰와 안정감
+- Secondary: #2C2420 (Dark Wood) - 텍스트 및 강한 강조
+- Background: #F7F5F0 (Paper White) - 눈이 편안한 종이 질감
+- Surface: #FFFFFF (Card White) - 콘텐츠 가독성 확보
+- Border: #DCD6CE (Soft Beige) - 은은한 구분선
 
-**Core Philosophy**: 우주 공간에서 지식이 별처럼 빛나는 경험
+**Semantic Colors**
+- Success: #4A6B56 (Muted Green) - 성취감/완료
+- Warning: #D4A24E (Warm Amber) - 주의
+- Error: #B85C5C (Soft Red) - 오류/삭제 (자극적이지 않게)
 
-#### Background Colors (배경)
+### Typography System
+**Tone: Modern & Classic Hybrid**
+- Headings: Serif 계열 (예: Merriweather/DM Serif) - 서재/책 느낌
+- Body: Sans-serif 계열 (예: Inter/Pretendard) - 모바일 가독성 최적화
+- Scale: 모바일 우선의 간결한 4단계 스케일 (H1, H2, Body, Caption)
 
-| Token | Hex | Usage |
-|-------|-----|-------|
-| `bg-void` | `#0a0a0f` | 최심층 배경 (그래프 캔버스) |
-| `bg-space` | `#0f172a` | 기본 배경 (Slate-900) |
-| `bg-nebula` | `#1e293b` | 카드 배경 (Slate-800) |
-| `bg-surface` | `#334155` | 상승된 표면 (Slate-700) |
+### Spacing & Layout Foundation
+**Grid & Spacing**
+- Base Unit: 8px
+- Layout: 여백이 넉넉한 갤러리형 (Dense하지 않음)
+- Card Spacing: 16px (내부 여백), 12px (카드 간 간격)
+- Radius: 12px (부드러운 곡선)
 
-#### Semantic Accent Colors (의미 있는 강조색)
+### Accessibility Considerations
+- 텍스트 대비: WCAG AA 기준 준수 (Background vs Text)
+- 터치 타겟: 최소 44x44px 확보 (모바일 우선)
+- 다크 모드: “밤의 서재” 컨셉으로 별도 웜 다크 팔레트 대응
 
-| Token | Hex | Meaning | Usage |
-|-------|-----|---------|-------|
-| `accent-fact` | `#3b82f6` | 사실/정보 (Blue-500) | 팩트 기반 캡처 |
-| `accent-insight` | `#ec4899` | 통찰/감정 (Pink-500) | 개인적 깨달음 |
-| `accent-ai` | `#8b5cf6 → #ec4899` | AI 처리 중 (Purple Gradient) | AI 작업 표시 |
-| `accent-connection` | `#06b6d4` | 연결 (Cyan-500) | Synapse 연결선 |
-| `accent-growth` | `#10b981` | 성장/성공 (Emerald-500) | 긍정 피드백 |
-| `accent-warning` | `#f59e0b` | 주의 (Amber-500) | 경고 상태 |
+## Design Direction Decision
 
-#### Mood Colors (5가지 무드)
+### Design Directions Explored
+Classic Library(서재), Modern Stack(모바일 피드), Timeline Stream(일기), Minimal Deck(몰입) 등 다양한 메타포 탐색.
 
-| Mood | Hex | Emoji Hint |
-|------|-----|------------|
-| `mood-curious` | `#3b82f6` | 🔵 호기심 |
-| `mood-inspired` | `#f59e0b` | 🟡 영감 |
-| `mood-peaceful` | `#10b981` | 🟢 평화 |
-| `mood-passionate` | `#ef4444` | 🔴 열정 |
-| `mood-reflective` | `#8b5cf6` | 🟣 성찰 |
+### Chosen Direction
+**Hybrid Modern Stack (Contextual Optimization Strategy)**
+- **Base Architecture**: Modern Stack (하단 탭 + 피드)
+- **Home Tab**: Modern Stack (오늘의 추천/피드)
+- **Library Tab**: Classic Library (주제별 그리드 뷰)
+- **Journal Tab**: Timeline Stream (시간순 기록 흐름)
+- **Reading/Detail Mode**: Minimal Deck (몰입형 카드 인터랙션)
 
-#### Text Colors (텍스트)
+### Design Rationale
+- **친숙함**: 메인 구조는 가장 익숙한 모바일 패턴(Modern Stack)을 따라 학습 비용 최소화.
+- **맥락 최적화**: 탐색(Library), 회고(Journal), 읽기(Detail) 등 각 행동의 목적에 가장 적합한 뷰를 제공하여 경험의 깊이 더함.
+- **확장성**: 탭별로 독립적인 뷰 패턴을 가지므로 기능 확장이 용이함.
 
-| Token | Hex | Usage |
-|-------|-----|-------|
-| `text-primary` | `#f8fafc` | 주요 텍스트 (Slate-50) |
-| `text-secondary` | `#cbd5e1` | 보조 텍스트 (Slate-300) |
-| `text-muted` | `#64748b` | 비활성 텍스트 (Slate-500) |
-
-### Typography
-
-**Font Family**: Geist Sans (Primary), Inter (Fallback)
-
-| Element | Size | Weight | Line Height |
-|---------|------|--------|-------------|
-| `h1` | 2.25rem (36px) | 700 | 1.2 |
-| `h2` | 1.875rem (30px) | 600 | 1.3 |
-| `h3` | 1.5rem (24px) | 600 | 1.4 |
-| `body` | 1rem (16px) | 400 | 1.6 |
-| `caption` | 0.875rem (14px) | 400 | 1.5 |
-| `small` | 0.75rem (12px) | 400 | 1.4 |
-
-**Font Constraint**: ❌ Serif(명조체) 사용 금지 → Sans-serif(고딕)로 통일
-
-### Spacing System
-
-Tailwind 기본 4px 기반:
-- `space-1`: 4px
-- `space-2`: 8px
-- `space-3`: 12px
-- `space-4`: 16px
-- `space-6`: 24px
-- `space-8`: 32px
-
-### Border Radius
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `rounded-sm` | 4px | 작은 버튼, 태그 |
-| `rounded-md` | 8px | 입력 필드 |
-| `rounded-lg` | 12px | 카드 |
-| `rounded-xl` | 16px | 모달, 큰 카드 |
-| `rounded-full` | 9999px | 아바타, 원형 버튼 |
-
-### Shadow System
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `shadow-glow-sm` | `0 0 10px rgba(59, 130, 246, 0.3)` | 작은 발광 |
-| `shadow-glow-md` | `0 0 20px rgba(59, 130, 246, 0.4)` | 중간 발광 |
-| `shadow-glow-lg` | `0 0 40px rgba(59, 130, 246, 0.5)` | 큰 발광 (연결 강조) |
-| `shadow-card` | `0 4px 6px -1px rgba(0, 0, 0, 0.3)` | 카드 그림자 |
-
----
-
-## Design Direction
-
-### Selected Direction: "C. Balanced Hybrid (Library First)"
-
-**컨셉**: 메이슨리 그리드(라이브러리)를 기본 뷰로, 그래프 뷰로 자연스럽게 전환
-
-#### Layout Strategy
-
-```
-┌─────────────────────────────────────────────────────────┐
-│  [🔍 Search]          [Grid/Graph Toggle]    [⚙️]      │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│   ┌──────┐  ┌──────────┐  ┌──────┐                     │
-│   │ Card │  │   Card   │  │ Card │   ← Masonry Grid    │
-│   │  A   │  │    B     │  │  C   │     (Default)       │
-│   └──────┘  │          │  └──────┘                     │
-│             └──────────┘                               │
-│   ┌──────────┐  ┌──────┐                               │
-│   │   Card   │  │ Card │                               │
-│   │    D     │  │  E   │                               │
-│   └──────────┘  └──────┘                               │
-│                                                         │
-│                    ↕️ Toggle                            │
-│                                                         │
-│        (A)────────(B)                                  │
-│         │  \       │                                   │
-│         │   \      │        ← Graph View               │
-│        (C)   (D)──(E)          (연결 탐색)             │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
-```
-
-#### View Transition
-
-- **Trigger**: 상단 Toggle 버튼 또는 카드 더블클릭
-- **Animation**: Framer Motion `layoutId`로 Morphing 전환
-- **Duration**: 400ms ease-in-out
-- **State Persistence**: 마지막 뷰 상태 저장
-
----
-
-## Component Strategy
-
-### Core Components
-
-#### 1. MorphingCard
-
-**Purpose**: Grid View ↔ Graph View 간 자연스러운 변환
-
-**States**:
-- `grid`: 직사각형, 상세 정보 표시
-- `graph`: 원형/정사각형, 연결선 표시
-- `expanded`: 전체 화면, 상세 보기
-
-**Implementation**:
-```tsx
-<motion.div
-  layoutId={`card-${id}`}
-  className={cn(
-    "bg-nebula rounded-lg",
-    state === "grid" && "w-full aspect-video",
-    state === "graph" && "w-16 h-16 rounded-full"
-  )}
-  transition={{ duration: 0.4, ease: "easeInOut" }}
->
-  {/* Content adapts to state */}
-</motion.div>
-```
-
-**Visual Specs**:
-| State | Size | Border Radius | Content |
-|-------|------|---------------|---------|
-| Grid | 100% width, auto height | 12px | Title, Preview, Mood, Date |
-| Graph | 64px × 64px | 50% (circle) | Thumbnail only |
-| Expanded | Full viewport | 16px | Full content, Actions |
-
-#### 2. SynapseCanvas
-
-**Purpose**: 카드 간 연결선을 SVG Bezier 곡선으로 렌더링
-
-**Features**:
-- 동적 곡률: 거리에 따라 곡선 강도 조절
-- 연결 강도 시각화: 선 두께와 불투명도로 표현
-- 애니메이션: 새 연결 생성 시 그리기 효과
-
-**Implementation**:
-```tsx
-<svg className="absolute inset-0 pointer-events-none">
-  <motion.path
-    d={`M ${x1} ${y1} Q ${cx} ${cy} ${x2} ${y2}`}
-    stroke="var(--accent-connection)"
-    strokeWidth={Math.max(1, strength * 3)}
-    strokeOpacity={0.3 + strength * 0.5}
-    fill="none"
-    initial={{ pathLength: 0 }}
-    animate={{ pathLength: 1 }}
-    transition={{ duration: 0.6 }}
-  />
-</svg>
-```
-
-#### 3. AITagPulse
-
-**Purpose**: AI가 생성한 태그/연결에 "왜?"를 표시
-
-**Behavior**:
-1. 태그 옆에 작은 `?` 아이콘
-2. 호버/탭 시 AI 근거 툴팁 표시
-3. 사용자가 수정/삭제 가능
-
-**Visual**:
-```
-[#machine-learning] [?]
-                     ↓
-  ┌─────────────────────────────────┐
-  │ AI 근거: "neural network",       │
-  │ "deep learning" 키워드 감지      │
-  │                    [수정] [삭제] │
-  └─────────────────────────────────┘
-```
-
-#### 4. CaptureStatusIndicator
-
-**Purpose**: 캡처 후 백그라운드 처리 상태를 투명하게 표시
-
-**States**:
-1. ✓ "저장됨" - URL + 메타데이터 저장 완료 (즉시)
-2. ◐ "아카이빙 중" - WACZ 처리 진행 (진행 표시기)
-3. ✓✓ "영구 보관됨" - WACZ 완료
-4. ⟳ "재시도 중" - 실패 시 백그라운드 재시도
-
-#### 5. SplitReferenceView (일기 작성용)
-
-**Purpose**: 일기 작성 시 과거 캡처를 참조하며 작성
-
-**Layout**:
-```
-┌──────────────────────┬──────────────────────┐
-│                      │                      │
-│   Today's Captures   │    Diary Editor      │
-│   (Timeline)         │                      │
-│                      │                      │
-│   [Card] ← drag →    │    "오늘 저장한      │
-│   [Card]             │     이 글을 보며..." │
-│   [Card]             │                      │
-│                      │                      │
-│   AI Summary ↓       │                      │
-│   "오늘 3개 저장,    │                      │
-│    주제: AI, Design" │                      │
-│                      │                      │
-└──────────────────────┴──────────────────────┘
-```
-
----
+### Implementation Approach
+- React Native Navigation 기반의 탭 구조 설계
+- 공통 컴포넌트(Card)를 `variant="list" | "grid" | "deck"` 형태로 설계하여 재사용성 극대화
+- 일관된 헤더/바텀 탭으로 네비게이션 앵커 유지
 
 ## User Journey Flows
 
-### Journey 1: Rapid Capture (2초 캡처)
+### Journey 1: The Capture (2초 캡처 & 자동 정리)
+**Goal**: 사용자가 맥락을 잃지 않고 순식간에 정보를 수집하고, 정리가 완료되었음을 확신하게 한다.
 
-**Context**: 모바일에서 웹페이지를 보다가 저장하고 싶을 때
-
-**Flow**:
-```
-1. Share Button 클릭
-   ↓
-2. Moments 선택
-   ↓
-3. [Optional] 무드 컬러 선택 (기본값 자동 선택)
-   ↓
-4. [Optional] Ghost Memo 입력 (한 줄 생각)
-   ↓
-5. 저장 완료 (Non-blocking Pulse UI)
-   - 즉시 "저장됨 ✓" 표시
-   - 백그라운드에서 WACZ 아카이빙
-   - 사용자는 원래 앱으로 복귀
+```mermaid
+graph TD
+    A[외부 앱/브라우저] -->|공유하기 버튼| B(System Share Sheet)
+    B -->|Moments 선택| C{자동 분석 & 저장}
+    C -->|성공| D[Toast: '서재에 안전하게 보관됨']
+    C -->|실패/지연| E[Notification: '백그라운드에서 현상 중...']
+    D --> F[종료 & 원래 앱 복귀]
+    
+    subgraph "Background Process"
+    G[WACZ 아카이빙] --> H[AI 요약 & 태깅]
+    H --> I[지식 그래프 연결]
+    I --> J[Push: '오늘의 지식 현상 완료']
+    end
 ```
 
-**Critical UX**: 
-- 전체 플로우 **2초 이내** 완료
-- 추가 입력 없이 즉시 저장 가능
-- 성공 알림은 최소한의 방해로 (Toast, 2초 후 자동 소멸)
+### Journey 2: The Atelier (밤 9시 회고 루틴)
+**Goal**: 하루 동안 수집한 조각들을 확인하고, 감정/생각을 더해 '나의 지식'으로 확정한다.
 
-### Journey 2: Spark of Insight (연결 발견)
-
-**Context**: 그래프 뷰에서 탐색하다가 새로운 연결 발견
-
-**Flow**:
-```
-1. Graph View 진입
-   ↓
-2. 카드 위 호버/탭
-   ↓
-3. 관련 카드들이 자석처럼 끌려옴 (Magnetic Pull)
-   ↓
-4. 연결선이 빛나며 표시 (Glow + Spark)
-   ↓
-5. "왜 연결됐지?" 궁금하면 연결선 탭
-   ↓
-6. AI 근거 팝오버: "공통 키워드: UX, 사용자 경험"
-   ↓
-7. [도움됨] / [도움 안됨] 피드백
+```mermaid
+graph TD
+    A[Push 알림: '오늘의 조각들이 도착했습니다'] -->|탭| B[Daily Journal View]
+    B --> C[오늘 수집한 카드 리스트 확인]
+    C --> D{각 카드 검토}
+    D -->|기본: 유지| E[카드 확정]
+    D -->|선택: 제외| F[보관함 이동]
+    E --> G[오늘의 감정/한줄 평 남기기]
+    G --> H[일기 저장 & 하루 마무리]
+    H --> I[성취감 배지/애니메이션]
 ```
 
-**Critical UX**:
-- 발견의 기쁨을 시각적으로 강조
-- AI 연결 근거 항상 노출 가능
-- 피드백 버튼으로 AI 학습
+### Journey 3: The Library (지식 재발견)
+**Goal**: 잊고 있던 지식을 키워드나 감정으로 다시 찾아내고, 연결된 맥락을 통해 새로운 인사이트를 얻는다.
 
-### Journey 3: Reflection & Synthesis (성찰 일기)
-
-**Context**: 밤 9시, 하루를 마무리하며 일기 작성
-
-**Flow**:
-```
-1. 앱 진입 (밤 9시 푸시 알림 또는 자발적)
-   ↓
-2. "오늘의 순간들" 타임라인 표시
-   - 오늘 캡처한 모든 카드
-   - AI 요약: "오늘 5개 저장, 주제: AI 윤리, 디자인 시스템"
-   ↓
-3. Split View 일기 에디터 열기
-   - 왼쪽: 오늘의 캡처들 (드래그 가능)
-   - 오른쪽: 일기 작성 영역
-   ↓
-4. 캡처 카드를 일기에 드래그 앤 드롭으로 인용
-   ↓
-5. AI가 "The Self-Query" 질문 제안
-   - "오늘 왜 이 글이 마음에 와닿았나요?"
-   ↓
-6. 일기 작성 완료
-   ↓
-7. "성찰에 도움됨" 피드백 버튼
+```mermaid
+graph TD
+    A[Library 탭 진입] --> B{탐색 방식 선택}
+    B -->|키워드 검색| C[검색 결과 리스트]
+    B -->|감정/무드 선택| D[무드별 카드 모음]
+    C & D --> E[카드 상세 보기]
+    E --> F[연관 지식 그래프 탐색]
+    F --> G[연결된 과거 노트 발견]
+    G --> H[새로운 인사이트 메모 추가]
 ```
 
-**Critical UX**:
-- 부담 없는 시작 (AI 초안 제공)
-- 과거 캡처와 자연스러운 연결
-- Ghost Memo 내용 자동 반영
+### Journey Patterns
+- **Quick Action**: 캡처/저장은 최소 터치로 완료하고 즉시 피드백 제공 (흐름 유지)
+- **Default Acceptance**: 회고 시 모든 항목은 기본 수락 상태, 제외할 것만 선택 (부담 최소화)
+- **Completion Loop**: 일기/회고의 끝에는 반드시 '완료'와 '성취감'을 주는 피드백 배치
 
----
+### Flow Optimization Principles
+- **No Dead Ends**: 모든 화면에서 다음 행동(연관 지식 보기, 홈으로 가기)을 제시
+- **Background Trust**: 오래 걸리는 작업(현상/정리)은 백그라운드로 돌리고, 진행 상태만 은유적으로 표현(현상 중...)
+
+## Component Strategy
+
+### Design System Components (Tamagui Base)
+- **Layout**: YStack, XStack, ScrollView (기본 레이아웃)
+- **Forms**: Input, TextArea, Button, Switch (입력 폼)
+- **Feedback**: Sheet(Bottom Sheet), Toast, Spinner (피드백/로딩)
+- **Overlay**: Dialog (알림/확인)
+
+### Custom Components
+**1. FragmentCard (핵심 스크랩 카드)**
+- **Purpose**: 스크랩된 지식 조각을 한눈에 보여줌
+- **Content**: 썸네일(Optional), 제목, 한 줄 요약, 감정 컬러 인디케이터
+- **Interaction**: 탭하여 상세 보기, 롱탭하여 컨텍스트 메뉴(삭제/공유)
+- **Implementation**: `YStack` 기반으로 직접 구현 (스타일링 유연성 확보)
+
+**2. MoodPicker (감정 선택기)**
+- **Purpose**: 캡처/일기 작성 시 감정 상태 기록
+- **Content**: 5가지 무드 컬러 원형 버튼
+- **Interaction**: 탭 시 선택 + 미세 햅틱 피드백
+
+**3. GraphView (지식 연결 뷰어)**
+- **Purpose**: 지식 간의 연결 관계 탐색
+- **Content**: 노드(지식), 엣지(연결선)
+- **Interaction**: 초기엔 복잡한 물리 엔진 대신 **중심 노드 + 방사형 리스트** 형태로 단순화하여 터치 사용성 확보
+
+### Implementation Roadmap
+**Phase 1 (MVP)**
+- Tamagui 기본 컴포넌트로 전체 레이아웃 구성
+- `FragmentCard`와 `MoodPicker`만 커스텀 제작하여 핵심 경험 검증
+
+**Phase 2 (Enhancement)**
+- `GraphView` 고도화 (인터랙티브 그래프 도입 검토)
+- `TimelineView` (일기 전용 타임라인 컴포넌트) 추가
+
+**Phase 3 (Polish)**
+- 마이크로 인터랙션 및 전용 애니메이션 추가
 
 ## UX Consistency Patterns
 
 ### Button Hierarchy
-
-| Type | Appearance | Usage |
-|------|------------|-------|
-| **Primary** | Solid Blue (`accent-fact`) | 주요 액션 (저장, 확인) |
-| **Secondary** | Outline Blue | 보조 액션 (취소, 건너뛰기) |
-| **Ghost** | Text only + Hover 배경 | 3차 액션 |
-| **Destructive** | Solid Red | 삭제 (확인 필요) |
+- **Primary (Floating Action)**: 캡처 버튼 (항상 노출하되 스크롤 시 숨김 처리로 콘텐츠 가림 방지)
+- **Secondary**: 확인/완료 (Filled Button, 우상단 배치)
+- **Tertiary**: 취소/이전 (Text Button)
 
 ### Feedback Patterns
-
-| Pattern | Animation | Duration | Usage |
-|---------|-----------|----------|-------|
-| **Pulse** | Scale 1.0 → 1.05 → 1.0 | 300ms | 저장 성공 |
-| **Shake** | X -5px → 5px → 0 | 200ms | 입력 오류 |
-| **Breathing** | Opacity 0.5 → 1 → 0.5 | 2s loop | 로딩/처리 중 |
-| **Spark** | Particle burst | 400ms | 연결 발견 |
+- **Success**: "소중히 보관했어요" 등 따뜻하고 인격적인 톤의 Toast 메시지 (화면 하단)
+- **Empty State**: "첫 번째 기억을 기다리고 있어요"와 함께 캡처 유도 일러스트 제공
+- **Loading (Developing)**: 이미지가 흐릿하다가 서서히 선명해지는 "현상(Developing)" 애니메이션 (1.5초 내외)
 
 ### Navigation Patterns
+- **Modal/Sheet**: 닫기/완료 버튼은 우상단 배치, 아래로 스와이프하여 닫기 지원
+- **Back**: 왼쪽 스와이프 제스처 기본 지원
 
-#### Mobile Navigation (Bottom Tab)
-
-```
-┌─────────────────────────────────────┐
-│                                     │
-│           [Content Area]            │
-│                                     │
-├─────────────────────────────────────┤
-│  [Home]  [Search]  [+]  [Diary] [Me]│
-│    ○       ○      ●      ○      ○   │
-│                 Glow                │
-└─────────────────────────────────────┘
-```
-
-**규칙**:
-- ❌ Floating Button 금지: 모든 탭 **동일 크기**
-- ✅ Capture 버튼만 **Filled + Glow**로 강조
-- 탭 아이콘: Lucide React (Outline style, Active = Filled)
-
-#### Desktop Navigation (Sidebar)
-
-```
-┌──────┬──────────────────────────────┐
-│      │                              │
-│ Logo │        [Content Area]        │
-│      │                              │
-│──────│                              │
-│ Home │                              │
-│Search│                              │
-│Diary │                              │
-│──────│                              │
-│ [+]  │                              │
-│Capture                              │
-│      │                              │
-└──────┴──────────────────────────────┘
-```
-
-**규칙**:
-- Collapsible: 접혀도 아이콘만 표시
-- Capture 버튼: 사이드바 하단 고정, 강조
-
-#### Tablet Navigation
-
-**규칙**: Tablet = **Extended Mobile**
-- 하단 탭 **유지** (데스크톱 사이드바 아님)
-- Grid 컬럼 확장 (3-4열)
-- Split View 활용 가능
-
-### Empty States
-
-**철학**: 빈 상태 = "가능성의 시작"
-
-```
-┌─────────────────────────────────────┐
-│                                     │
-│              ✦                      │
-│         (Singularity)               │
-│                                     │
-│    "모든 우주는 하나의 점에서       │
-│     시작됩니다.                     │
-│                                     │
-│     첫 번째 순간을 캡처해보세요."   │
-│                                     │
-│         [+ 캡처하기]                │
-│                                     │
-└─────────────────────────────────────┘
-```
-
-**규칙**:
-- 우주/별 메타포 사용
-- 긍정적 프레이밍 ("비어있다" 대신 "시작점")
-- 명확한 CTA 버튼
-
-### Deletion UX
-
-**규칙**: ❌ 즉시 삭제 후 Undo 방식 **금지**
-
-```
-┌─────────────────────────────────────┐
-│                                     │
-│   🗑️ 정말 삭제하시겠습니까?         │
-│                                     │
-│   "2023년 12월의 이 순간을          │
-│    영원히 보낼 준비가 되셨나요?"    │
-│                                     │
-│   [취소]          [삭제하기]        │
-│                                     │
-└─────────────────────────────────────┘
-```
-
-**규칙**:
-- 반드시 **확인 팝업** 표시
-- 감성적 문구로 소중함 상기
-- 휴지통 30일 보관 (완전 삭제 전)
-
----
+### Form & Input Patterns
+- **Auto-save (Optimistic)**: 로컬 DB에 즉시 저장하여 딜레이 없는 경험 제공
+- **Error Handling**: 붉은색 경고 대신 "다시 시도해볼까요?"와 같은 부드러운 제안형 메시지
 
 ## Responsive Design & Accessibility
 
 ### Responsive Strategy
+- **Mobile First**: 모든 기능은 모바일 싱글 컬럼 뷰를 기준으로 설계.
+- **Tablet/Desktop Expansion**:
+  - `sm` (Mobile): Bottom Navigation + Single Column Feed
+  - `md` (Tablet) ~ `lg` (Desktop): Left Sidebar Navigation + Split View (List + Detail)
+  - **Readability**: 상세 뷰 본문 영역은 Max-width 700px 제한으로 가독성 유지
 
--   **Breakpoints:** Tailwind Default (`sm`: 640px, `md`: 768px, `lg`: 1024px, `xl`: 1280px).
--   **Device Adaptation:**
-    -   **Mobile (< 768px):** Bottom Tab Navigation. Single Column Layout. Full-screen Modal for details.
-    -   **Tablet (768px - 1024px):** **Extended Mobile**. Bottom Tab 유지하되 Grid 컬럼 확장(3-4열) 및 Split View(목록+상세) 활용.
-    -   **Desktop (> 1024px):** Collapsible Sidebar Navigation. Multi-column Masonry. Floating Windows & Panels.
+### Breakpoint Strategy
+**Tamagui Standard Breakpoints**
+- `sm`: < 768px (Mobile)
+- `md`: 768px ~ 1023px (Tablet Portrait)
+- `lg`: 1024px ~ 1279px (Tablet Landscape / Laptop)
+- `xl`: 1280px+ (Desktop)
 
 ### Accessibility Strategy
-
--   **Color Contrast:** Deep Navy 배경 위 텍스트는 `Slate-100` 이상을 사용하여 **Contrast Ratio 7:1 (AAA)** 목표 준수.
--   **Keyboard Navigation:** 마우스 없이도 모든 기능을 사용할 수 있도록 Focus Ring(Bright Blue)을 명확히 표시하고 논리적 탭 순서(Tab Order) 구현.
--   **Screen Reader:** `MorphingCard`, `SynapseCanvas` 등 비표준 UI 요소에 `aria-label` 및 `role` 속성을 철저히 적용하여 맥락 정보 제공.
--   **Reduced Motion:** 화려한 애니메이션(Spark, Morphing)은 `prefers-reduced-motion` 미디어 쿼리 감지 시 단순 Fade 효과로 대체.
-
-### Localization (i18n) Strategy
-
--   **Day 1 Support:** 초기 아키텍처부터 `next-intl` 등을 도입하여 **한국어/영어** 동시 지원.
--   **Resource Management:** 모든 UI 텍스트를 JSON 리소스 파일로 분리하여 관리, 향후 글로벌 확장 시 번역 비용 최소화.
+- **Dark Mode**: 시스템 설정 연동 기본 + 사이드바/프로필 메뉴에 **1-Tap 수동 토글** 배치
+- **Dynamic Type**: 시스템 폰트 크기 설정 존중 + 앱 내 미세 조정 지원
+- **Focus Management**: 키보드 탐색(PC/Tablet)을 위한 Focus Ring 및 Tab Order 설계
 
 ### Implementation Guidelines
-
-1.  **Mobile First:** 모든 스타일링은 모바일(`base`)을 기준으로 작성하고, `md:`, `lg:` 접두사를 사용하여 큰 화면 대응.
-2.  **Semantic HTML:** `div` 남발 대신 `main`, `nav`, `article`, `section` 등 시맨틱 태그 사용하여 구조적 접근성 확보.
-3.  **Touch Targets:** 모바일/태블릿 환경에서 모든 인터랙티브 요소는 최소 44x44px 영역 확보.
-
----
-
-## MUST NOT Do (Critical Constraints)
-
-다음 항목들은 **절대 위반 금지**입니다:
-
-| # | 금지 항목 | 올바른 대안 |
-|---|----------|-------------|
-| 1 | ❌ Serif(명조체) 폰트 사용 | ✅ Sans-serif(고딕, Geist Sans/Inter)로 통일 |
-| 2 | ❌ 즉시 삭제 후 Undo 방식 | ✅ 반드시 확인 팝업 (소중한 추억 존중) |
-| 3 | ❌ 모바일 Floating Button (크기 다르게) | ✅ 동일 크기, Capture만 Filled+Glow로 강조 |
-| 4 | ❌ 태블릿에 데스크톱 UX 적용 | ✅ 태블릿은 Extended Mobile (하단 탭 유지) |
-| 5 | ❌ 설명 없는 AI 자동화 | ✅ 반드시 근거(키워드) 노출 및 사용자 수정 가능 |
-| 6 | ❌ 텍스트 링크로만 연관성 표현 | ✅ 비주얼 카드 군집으로 표현 |
-| 7 | ❌ 미정리 상태를 "지저분함"으로 표현 | ✅ "가능성의 상태", "현상 대기 중인 필름"으로 긍정적 재정의 |
-| 8 | ❌ 피드백 버튼 없는 AI 기능 | ✅ "도움됨/도움안됨" 버튼 필수 |
-
----
-
-## Document History
-
-| Version | Date | Changes |
-|---------|------|---------|
-| 1.0 | 2026-01-10 | Initial creation via UX Design workflow |
-| 1.1 | 2026-01-12 | Restored after file corruption |
-
----
-
-**Document Status:** ✅ Complete (Restored)
-**Last Updated:** 2026-01-12
+- **Layout**: `XStack`/`YStack`의 반응형 Props 활용
+- **Navigation**: 화면 크기에 따라 `BottomTabs`(Mobile) ↔ `SideRail`(Desktop) 자동 전환 구조 구현
